@@ -1,10 +1,14 @@
 package com.skyternity.bottomless;
 
+import com.skyternity.bottomless.Blocks.BlockRegistry;
+import com.skyternity.bottomless.Items.ItemRegistry;
 import net.fabricmc.api.ModInitializer;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import static com.sun.org.apache.xerces.internal.dom.DOMMessageFormatter.init;
 
 public class BottomlessMain implements ModInitializer {
 
@@ -17,6 +21,8 @@ public class BottomlessMain implements ModInitializer {
     public void onInitialize() {
         log(Level.INFO, "Initializing");
         //TODO: Initializer
+        ItemRegistry.init();
+        BlockRegistry.init();
     }
 
     public static void log(Level level, String message){
