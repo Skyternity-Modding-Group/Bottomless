@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "bottomless",
+  "version": "${version}",
+  "name": "Bottomless",
+  "description": "Bottomless “a mod which expands whats below the pitch black void, it will add many new features and overall content to the game.”",
+  "authors": [
+    "LePichu"
+  ],
+  "contributors": [],
+  "contact": {},
+  "license": "Apache-2.0",
+  "icon": "assets/bottomless/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.skyternity.bottomless.BottomlessMain"
+    ],
+    "client": [],
+    "server": []
+  },
+  "mixins": [
+    "bottomless.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.11.2",
+    "fabric": "*"
+  }
+}
