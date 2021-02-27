@@ -16,7 +16,7 @@ public class BlockRegistry {
     // TODO finalize name
     // TODO change jsons to new name
     // TODO add translation key for new name
-    public static final Block TEST_GLOW_BLOCK = register(new GwowwyBwocc(FabricBlockSettings.copyOf(REDSTONE_ORE).requiresTool().breakByTool(FabricToolTags.PICKAXES,5)), "testglowblock");
+    public static final Block TEST_GLOW_BLOCK = register(new GwowwyBwocc(FabricBlockSettings.copy(REDSTONE_ORE)), "testglowblock");
 
     // Methods
     private static Block register(Block block, String name) {
