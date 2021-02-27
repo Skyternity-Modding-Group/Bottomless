@@ -21,6 +21,9 @@ public class ItemRegistry {
     public static final Item MIDSTONE = register(BlockRegistry.MIDSTONE, "midstone", new Item.Settings().group(GROUP));
     public static final Item SHADESTONE = register(BlockRegistry.SHADESTONE, "shadestone", new Item.Settings().group(GROUP));
 
+    // TODO finalize name
+    public static final Item TEST_GLOW_BLOCK = register(BlockRegistry.TEST_GLOW_BLOCK, "testglowblock", new Item.Settings().group(GROUP));
+
     // Methods
     public static void init () {
         // Loads Class(TM)

@@ -13,6 +13,11 @@ public class BlockRegistry {
     public static final Block MIDSTONE = register(new Block(FabricBlockSettings.copyOf(STONE).requiresTool().breakByTool(FabricToolTags.PICKAXES,5)), "midstone");
     public static final Block SHADESTONE = register(new Block(FabricBlockSettings.copyOf(STONE).requiresTool().breakByTool(FabricToolTags.PICKAXES,5)), "shadestone");
 
+    // TODO finalize name
+    // TODO change jsons to new name
+    // TODO add translation key for new name
+    public static final Block TEST_GLOW_BLOCK = register(new GwowwyBwocc(FabricBlockSettings.copyOf(REDSTONE_ORE).requiresTool().breakByTool(FabricToolTags.PICKAXES,5)), "testglowblock");
+
     // Methods
     private static Block register(Block block, String name) {
         return Registry.register(Registry.BLOCK, new Identifier(BottomlessMain.MOD_ID, name), block);
