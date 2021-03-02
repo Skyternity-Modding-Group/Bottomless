@@ -1,0 +1,22 @@
+{
+  "config": {
+    "top_material": {
+      "Name": "bottomless:testglowblock",
+      "Properties": {
+        "lit": "false"
+      }
+    },
+    "under_material": {
+      "Name": "bottomless:shadestone",
+      "Properties": { }
+    },
+    "underwater_material": {
+      "Name": "bottomless:testglowblock",
+      "Properties": {
+        "lit": "false"
+      }
+    },
+    "generate_quick_soil": true
+  },
+  "type": "bottomless:surface_builder"
+}

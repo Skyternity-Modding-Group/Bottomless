@@ -1,0 +1,13 @@
+{
+  "type": "bottomless:the_void",
+  "generator": {
+    "type": "minecraft:noise",
+    "seed": 286956243,
+    "biome_source": {
+      "type": "minecraft:fixed",
+      "seed": 286956243,
+      "biome": "bottomless:desolate_plains"
+    },
+    "settings": "minecraft:overworld"
+  }
+}
