@@ -1,4 +1,4 @@
-package com.skyternity.bottomless.WorldGeneration;
+package com.skyternity.bottomless.worldgen;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;

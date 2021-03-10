@@ -1,0 +1,6 @@
+{
+    "parent":"block/cross",
+    "textures":{
+        "cross":"bottomless:block/small_crystal"
+    }
+}

@@ -1,8 +1,8 @@
-package com.skyternity.bottomless.WorldGeneration.Dimensions;
+package com.skyternity.bottomless.worldgen.dimensions;
 
 import com.skyternity.bottomless.BottomlessMain;
-import com.skyternity.bottomless.WorldGeneration.BottomlessSurfaceBuilder;
-import com.skyternity.bottomless.WorldGeneration.BottomlessSurfaceBuilderConfig;
+import com.skyternity.bottomless.worldgen.BottomlessSurfaceBuilder;
+import com.skyternity.bottomless.worldgen.BottomlessSurfaceBuilderConfig;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryKey;

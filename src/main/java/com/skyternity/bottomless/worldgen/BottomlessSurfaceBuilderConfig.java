@@ -1,4 +1,4 @@
-package com.skyternity.bottomless.WorldGeneration;
+package com.skyternity.bottomless.worldgen;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.PrimitiveCodec;
