@@ -1,4 +1,4 @@
-package com.skyternity.bottomless.Blocks;
+package com.skyternity.bottomless.blocks;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;

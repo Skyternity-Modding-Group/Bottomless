@@ -1,15 +1,13 @@
 package com.skyternity.bottomless;
 
-import com.skyternity.bottomless.Blocks.BlockRegistry;
-import com.skyternity.bottomless.Items.ItemRegistry;
-import com.skyternity.bottomless.WorldGeneration.Dimensions.DimensionRegistry;
+import com.skyternity.bottomless.blocks.BlockRegistry;
+import com.skyternity.bottomless.items.ItemRegistry;
+import com.skyternity.bottomless.worldgen.dimensions.DimensionRegistry;
 import net.fabricmc.api.ModInitializer;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import static com.sun.org.apache.xerces.internal.dom.DOMMessageFormatter.init;
 
 public class BottomlessMain implements ModInitializer {
 

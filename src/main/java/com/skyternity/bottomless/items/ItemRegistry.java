@@ -1,6 +1,6 @@
-package com.skyternity.bottomless.Items;
+package com.skyternity.bottomless.items;
 
-import com.skyternity.bottomless.Blocks.BlockRegistry;
+import com.skyternity.bottomless.blocks.BlockRegistry;
 import com.skyternity.bottomless.BottomlessMain;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.minecraft.block.Block;
@@ -20,6 +20,9 @@ public class ItemRegistry {
     // Blockitems
     public static final Item MIDSTONE = register(BlockRegistry.MIDSTONE, "midstone", new Item.Settings().group(GROUP));
     public static final Item SHADESTONE = register(BlockRegistry.SHADESTONE, "shadestone", new Item.Settings().group(GROUP));
+    public static final Item CRYSTAL = register(BlockRegistry.CRYSTAL, "crystal", new Item.Settings().group(GROUP));
+    public static final Item SMALL_CRYSTAL = register(BlockRegistry.SMALL_CRYSTAL, "small_crystal", new Item.Settings().group(GROUP));
+    public static final Item CRYSTAL_PILLAR = register(BlockRegistry.CRYSTAL_PILLAR, "crystal_pillar", new Item.Settings().group(GROUP));
 
     // TODO finalize name
     public static final Item TEST_GLOW_BLOCK = register(BlockRegistry.TEST_GLOW_BLOCK, "testglowblock", new Item.Settings().group(GROUP));

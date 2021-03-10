@@ -1,4 +1,4 @@
-package com.skyternity.bottomless.Mixins;
+package com.skyternity.bottomless.mixins;
 
 import java.util.List;
 import java.util.function.Supplier;

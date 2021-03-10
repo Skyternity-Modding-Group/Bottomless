@@ -1,10 +1,11 @@
-package com.skyternity.bottomless.Blocks;
+package com.skyternity.bottomless.blocks;
 
 import com.skyternity.bottomless.BottomlessMain;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.block.Block;
 import static net.minecraft.block.Blocks.*;
+
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
@@ -12,6 +13,9 @@ public class BlockRegistry {
     // Bwocks
     public static final Block MIDSTONE = register(new Block(FabricBlockSettings.copyOf(STONE).requiresTool().breakByTool(FabricToolTags.PICKAXES,5)), "midstone");
     public static final Block SHADESTONE = register(new Block(FabricBlockSettings.copyOf(STONE).requiresTool().breakByTool(FabricToolTags.PICKAXES,5)), "shadestone");
+    public static final Block CRYSTAL = register(new Block(FabricBlockSettings.copyOf(GLASS).noCollision()), "crystal");
+    public static final Block SMALL_CRYSTAL = register(new Block(FabricBlockSettings.copyOf(GLASS).noCollision()), "small_crystal");
+    public static final Block CRYSTAL_PILLAR = register(new CrystalBlock(FabricBlockSettings.copyOf(GLASS)), "crystal_pillar");
 
     // TODO finalize name
     // TODO change jsons to new name

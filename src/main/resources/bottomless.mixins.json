@@ -1,6 +1,6 @@
 {
   "required": true,
-  "package": "com.skyternity.bottomless.Mixins",
+  "package": "com.skyternity.bottomless.mixins",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "GenerationSettingsAccessor"

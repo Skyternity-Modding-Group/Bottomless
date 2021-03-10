@@ -16,7 +16,9 @@
     "main": [
       "com.skyternity.bottomless.BottomlessMain"
     ],
-    "client": [],
+    "client": [
+      "com.skyternity.bottomless.client.BottomlessClient"
+    ],
     "server": []
   },
   "mixins": [
