@@ -31,7 +31,9 @@
     "minecraft:ruined_portal"
   ],
   "features": [
-    [],
+    [
+      "bottomless:pillar_feature"
+    ],
     [
       "minecraft:lake_water"
     ],

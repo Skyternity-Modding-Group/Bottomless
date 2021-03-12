@@ -3,6 +3,7 @@ package com.skyternity.bottomless;
 import com.skyternity.bottomless.blocks.BlockRegistry;
 import com.skyternity.bottomless.items.ItemRegistry;
 import com.skyternity.bottomless.worldgen.dimensions.DimensionRegistry;
+import com.skyternity.bottomless.worldgen.features.FeatureRegistry;
 import net.fabricmc.api.ModInitializer;
 
 import org.apache.logging.log4j.Level;
@@ -23,6 +24,7 @@ public class BottomlessMain implements ModInitializer {
         ItemRegistry.init();
         BlockRegistry.init();
         DimensionRegistry.init();
+        FeatureRegistry.init();
     }
 
     public static void log(Level level, String message){
