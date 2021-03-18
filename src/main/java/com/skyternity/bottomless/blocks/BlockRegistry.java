@@ -2,10 +2,13 @@ package com.skyternity.bottomless.blocks;
 
 import com.skyternity.bottomless.BottomlessMain;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.block.Block;
 import static net.minecraft.block.Blocks.*;
 
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
@@ -16,6 +19,14 @@ public class BlockRegistry {
     public static final Block CRYSTAL = register(new Block(FabricBlockSettings.copyOf(GLASS).noCollision()), "crystal");
     public static final Block SMALL_CRYSTAL = register(new Block(FabricBlockSettings.copyOf(GLASS).noCollision()), "small_crystal");
     public static final Block CRYSTAL_PILLAR = register(new CrystalBlock(FabricBlockSettings.copyOf(GLASS)), "crystal_pillar");
+    public static final Block GEYSER = register(new Geyser(FabricBlockSettings.copyOf(STONE).breakByTool(FabricToolTags.PICKAXES, 5).nonOpaque()), "geyser");
+
+    // Block Entities
+    public static final BlockEntityType<GeyserEntity> GEYSER_ENTITY = Registry.register(
+            Registry.BLOCK_ENTITY_TYPE,
+            new Identifier(BottomlessMain.MOD_ID, "geyser"),
+            FabricBlockEntityTypeBuilder.create(GeyserEntity::new, GEYSER).build()
+    );
 
     // TODO finalize name
     // TODO change jsons to new name

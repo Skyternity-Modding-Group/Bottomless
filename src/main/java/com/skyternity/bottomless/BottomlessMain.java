@@ -1,5 +1,6 @@
 package com.skyternity.bottomless;
 
+import com.skyternity.bottomless.Models.ModelReg;
 import com.skyternity.bottomless.blocks.BlockRegistry;
 import com.skyternity.bottomless.items.ItemRegistry;
 import com.skyternity.bottomless.worldgen.dimensions.DimensionRegistry;
@@ -25,10 +26,10 @@ public class BottomlessMain implements ModInitializer {
         BlockRegistry.init();
         DimensionRegistry.init();
         FeatureRegistry.init();
+        ModelReg.init();
     }
 
     public static void log(Level level, String message){
         LOGGER.log(level, "["+MOD_NAME+"] " + message);
     }
-
 }
