@@ -21,13 +21,6 @@ public class BlockRegistry {
     public static final Block CRYSTAL_PILLAR = register(new CrystalBlock(FabricBlockSettings.copyOf(GLASS)), "crystal_pillar");
     public static final Block GEYSER = register(new Geyser(FabricBlockSettings.copyOf(STONE).breakByTool(FabricToolTags.PICKAXES, 5).nonOpaque()), "geyser");
 
-    // Block Entities
-    public static final BlockEntityType<GeyserEntity> GEYSER_ENTITY = Registry.register(
-            Registry.BLOCK_ENTITY_TYPE,
-            new Identifier(BottomlessMain.MOD_ID, "geyser"),
-            FabricBlockEntityTypeBuilder.create(GeyserEntity::new, GEYSER).build()
-    );
-
     // TODO finalize name
     // TODO change jsons to new name
     // TODO add translation key for new name
