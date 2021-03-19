@@ -1,16 +1,24 @@
 package com.skyternity.bottomless.blocks;
 
+import com.skyternity.bottomless.BottomlessMain;
+import com.skyternity.bottomless.particles.ParticleRegistry;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Random;
 
 public class Geyser extends BlockWithEntity {
     public Geyser(FabricBlockSettings settings) {
@@ -27,6 +35,28 @@ public class Geyser extends BlockWithEntity {
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
         return checkType(type, GeyserEntity.GEYSER_ENTITY_TYPE, GeyserEntity::tick);
+    }
+
+    @Environment(EnvType.CLIENT)
+    @Override
+    public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
+        super.randomDisplayTick(state, world, pos, random);
+        spawnParticles(world, pos);
+    }
+    private void spawnParticles(World world, BlockPos pos) {
+        if(!world.getBlockState(pos).isOpaqueFullCube(world, pos)) {
+            Vec3d pos1 = BlockUtil.offset(pos, 12D, 10D, 5D);
+            particleSpout(world, pos1);
+
+            Vec3d pos2 = BlockUtil.offset(pos, 8D, 5D, 11D);
+            particleSpout(world, pos2);
+
+            Vec3d pos3 = BlockUtil.offset(pos, 5, 7, 5);
+            particleSpout(world, pos3);
+        }
+    }
+    private void particleSpout(World world, Vec3d pos) {
+        world.addParticle(ParticleRegistry.GEYSER_PARTICLE, pos.x, pos.y, pos.z, 0.0D, 0.3D, 0.0D);
     }
 
     @Override

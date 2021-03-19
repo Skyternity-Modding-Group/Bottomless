@@ -10,9 +10,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Box;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.*;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
@@ -24,11 +22,13 @@ public class GeyserEntity extends BlockEntity {
     }
 
     public static void tick(World world, BlockPos pos, BlockState state, GeyserEntity blockEntity) {
-        BottomlessMain.LOGGER.info("e");
         if(world.isClient)
             return;
 
-        List<Entity> entities = world.getOtherEntities(null, Box.from(Vec3d.ofCenter(pos)).expand(0D, 1.5D, 0D));
+        Vec3d from = new Vec3d(pos.getX(), pos.getY(), pos.getZ());
+        Vec3d to = from.add(1D, 2D, 1D);
+        Box box = new Box(from, to);
+        List<Entity> entities = world.getOtherEntities(null, box);
 
         for (Entity e : entities) {
             if (!(e instanceof LivingEntity))
