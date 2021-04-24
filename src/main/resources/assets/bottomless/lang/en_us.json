@@ -3,7 +3,8 @@
 
     "block.bottomless.midstone": "Midstone",
     "block.bottomless.shadestone": "Shadestone",
-    "block.bottomless.crystal": "Ancient Glass Shard",
-    "block.bottomless.small_crystal": "Small Ancient Glass Shard",
-    "block.bottomless.crystal_pillar": "Ancient Glass"
+    "block.bottomless.ancient_glass_shard": "Ancient Glass Shard",
+    "block.bottomless.small_ancient_glass_shard": "Small Ancient Glass Shard",
+    "block.bottomless.ancient_glass": "Ancient Glass",
+    "block.bottomless.black_sand": "Black Sand"
 }

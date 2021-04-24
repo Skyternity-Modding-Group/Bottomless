@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "bottomless:block/ancient_glass_horizontal",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "bottomless:block/ancient_glass"
+    },
+    "axis=z": {
+      "model": "bottomless:block/ancient_glass_horizontal",
+      "x": 90
+    }
+  }
+}
