@@ -7,6 +7,7 @@ import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.block.Block;
 import static net.minecraft.block.Blocks.*;
 
+import net.minecraft.block.FallingBlock;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.util.Identifier;
@@ -20,7 +21,7 @@ public class BlockRegistry {
     public static final Block SMALL_ANCIENT_GLASS_SHARD = registerBlockWithItem(new Block(FabricBlockSettings.copyOf(GLASS).noCollision()), "small_ancient_glass_shard", ItemRegistry.GROUP);
     public static final Block ANCIENT_GLASS = registerBlockWithItem(new CrystalBlock(FabricBlockSettings.copyOf(GLASS)), "ancient_glass", ItemRegistry.GROUP);
 
-    public static final Block BLACK_SAND = registerBlockWithItem(new Block(FabricBlockSettings.copyOf(SAND).breakByHand(true)), "black_sand", ItemRegistry.GROUP);
+    public static final Block BLACK_SAND = registerBlockWithItem(new FallingBlock(FabricBlockSettings.copyOf(SAND).breakByHand(true)), "black_sand", ItemRegistry.GROUP);
 
     // TODO finalize name
     // TODO change jsons to new name
@@ -32,7 +33,7 @@ public class BlockRegistry {
         return Registry.register(Registry.BLOCK, new Identifier(BottomlessMain.MOD_ID, name), block);
     }
 
-    private static Block registerBlockWithItem(Block block, String name, ItemGroup group){ //the item group can be switched to demand ItemSettings instead of a specific setting, so each can be specified when calling the method.
+    private static Block registerBlockWithItem(Block block, String name, ItemGroup group){ //the item group can be switched to demand ItemSettings instead of an ItemGroup, so each setting can be specified when calling the method.
         Block regObj = register(block, name);
         ItemRegistry.registerBlockItem(block, name, new Item.Settings().group(group));
         return regObj;
