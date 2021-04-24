@@ -1,3 +1,6 @@
 {
-    "parent":"bottomless:block/crystal"
+    "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "bottomless:block/crystal"
+  }
 }
