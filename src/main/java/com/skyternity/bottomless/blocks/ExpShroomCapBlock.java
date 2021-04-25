@@ -4,7 +4,14 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.Fertilizable;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
@@ -75,4 +82,19 @@ public class ExpShroomCapBlock extends Block implements Fertilizable {
         }
     }
 
+    @Override
+    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+        ItemStack handItem = player.getStackInHand(hand);
+        if(handItem.getItem() == Items.GLASS_BOTTLE.asItem()){
+            player.giveItemStack(new ItemStack((Items.EXPERIENCE_BOTTLE)));
+            if(!player.isCreative()){
+                handItem.decrement(1);
+                world.setBlockState(pos, Blocks.AIR.getDefaultState());
+                world.updateNeighbors(pos, world.getBlockState(pos).getBlock());
+            }
+            return ActionResult.success(world.isClient);
+        }else{
+            return ActionResult.FAIL;
+        }
+    }
 }
