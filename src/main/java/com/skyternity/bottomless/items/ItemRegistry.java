@@ -22,6 +22,8 @@ public class ItemRegistry {
     public static final Item CRYSTAL = registerBlockItem(BlockRegistry.ANCIENT_GLASS_SHARD, "ancient_glass_shard", new Item.Settings().group(GROUP));
     public static final Item SMALL_CRYSTAL = registerBlockItem(BlockRegistry.SMALL_ANCIENT_GLASS_SHARD, "small_ancient_glass_shard", new Item.Settings().group(GROUP));
     public static final Item CRYSTAL_PILLAR = registerBlockItem(BlockRegistry.ANCIENT_GLASS, "ancient_glass", new Item.Settings().group(GROUP));
+    public static final Item GEYSER = register(BlockRegistry.GEYSER, "geyser", new Item.Settings().group(GROUP));
+    public static final Item POROUS_SHADESTONE = register(BlockRegistry.POROUS_SHADESTONE, "porous_shadestone", new Item.Settings().group(GROUP));
 
     // TODO finalize name
     public static final Item TEST_GLOW_BLOCK = registerBlockItem(BlockRegistry.TEST_GLOW_BLOCK, "testglowblock", new Item.Settings().group(GROUP));

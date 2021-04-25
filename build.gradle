@@ -20,6 +20,7 @@ dependencies {
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}+1.17"
+
 }
 
 processResources {
@@ -62,7 +63,7 @@ publishing {
 			artifact(jar) {
 				builtBy remapJar
 			}
-			artifact("${project.buildDir.absolutePath}/libs/${archivesBaseName}-${project.version}.jar"){
+			artifact("${project.buildDir.absolutePath}/libs/${archivesBaseName}-${project.version}.jar") {
 				builtBy remapJar
 			}
 			artifact(sourcesJar) {
