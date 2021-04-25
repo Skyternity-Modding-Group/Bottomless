@@ -1,0 +1,6 @@
+{
+    "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "bottomless:block/small_ancient_glass_shard"
+  }
+}

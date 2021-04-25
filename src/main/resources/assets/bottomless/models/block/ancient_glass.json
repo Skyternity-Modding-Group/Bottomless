@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "bottomless:block/ancient_glass_top",
+    "side": "bottomless:block/ancient_glass_side"
+  }
+}

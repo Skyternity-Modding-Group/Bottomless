@@ -12,32 +12,37 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
 public class ItemRegistry {
-    private static final ItemGroup GROUP = FabricItemGroupBuilder.build(new Identifier(BottomlessMain.MOD_ID,"group"), () -> new ItemStack(BlockRegistry.MIDSTONE));
+    public static final ItemGroup GROUP = FabricItemGroupBuilder.build(new Identifier(BottomlessMain.MOD_ID,"group"), () -> new ItemStack(BlockRegistry.MIDSTONE));
 
     // Items
 
-
-    // Blockitems
-    public static final Item MIDSTONE = register(BlockRegistry.MIDSTONE, "midstone", new Item.Settings().group(GROUP));
-    public static final Item SHADESTONE = register(BlockRegistry.SHADESTONE, "shadestone", new Item.Settings().group(GROUP));
-    public static final Item CRYSTAL = register(BlockRegistry.CRYSTAL, "crystal", new Item.Settings().group(GROUP));
-    public static final Item SMALL_CRYSTAL = register(BlockRegistry.SMALL_CRYSTAL, "small_crystal", new Item.Settings().group(GROUP));
-    public static final Item CRYSTAL_PILLAR = register(BlockRegistry.CRYSTAL_PILLAR, "crystal_pillar", new Item.Settings().group(GROUP));
+    /** // Blockitems
+    public static final Item MIDSTONE = registerBlockItem(BlockRegistry.MIDSTONE, "midstone", new Item.Settings().group(GROUP));
+    public static final Item SHADESTONE = registerBlockItem(BlockRegistry.SHADESTONE, "shadestone", new Item.Settings().group(GROUP));
+    public static final Item CRYSTAL = registerBlockItem(BlockRegistry.ANCIENT_GLASS_SHARD, "ancient_glass_shard", new Item.Settings().group(GROUP));
+    public static final Item SMALL_CRYSTAL = registerBlockItem(BlockRegistry.SMALL_ANCIENT_GLASS_SHARD, "small_ancient_glass_shard", new Item.Settings().group(GROUP));
+    public static final Item CRYSTAL_PILLAR = registerBlockItem(BlockRegistry.ANCIENT_GLASS, "ancient_glass", new Item.Settings().group(GROUP));
     public static final Item GEYSER = register(BlockRegistry.GEYSER, "geyser", new Item.Settings().group(GROUP));
     public static final Item POROUS_SHADESTONE = register(BlockRegistry.POROUS_SHADESTONE, "porous_shadestone", new Item.Settings().group(GROUP));
 
     // TODO finalize name
-    public static final Item TEST_GLOW_BLOCK = register(BlockRegistry.TEST_GLOW_BLOCK, "testglowblock", new Item.Settings().group(GROUP));
+    public static final Item TEST_GLOW_BLOCK = registerBlockItem(BlockRegistry.TEST_GLOW_BLOCK, "testglowblock", new Item.Settings().group(GROUP));
+
+     Who the hell registers block items by hand? Who was your lazyness teacher, huh? i wanna speak with them, NOW!
+     -Laz
+
+    **/
 
     // Methods
     public static void init () {
         // Loads Class(TM)
     }
+
     private static Item register(Item item, String name) {
         return Registry.register(Registry.ITEM, new Identifier(BottomlessMain.MOD_ID, name), item);
     }
 
-    private static Item register(Block block, String name, Item.Settings settings) {
+    public static Item registerBlockItem(Block block, String name, Item.Settings settings) {
         return register(new BlockItem(block, settings), name);
     }
 }
