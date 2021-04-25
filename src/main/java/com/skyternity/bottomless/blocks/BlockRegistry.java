@@ -15,13 +15,14 @@ import net.minecraft.util.registry.Registry;
 
 public class BlockRegistry {
     // Bwocks
-    public static final Block MIDSTONE = registerBlockWithItem(new Block(FabricBlockSettings.copyOf(STONE).requiresTool().breakByTool(FabricToolTags.PICKAXES,5)), "midstone", ItemRegistry.GROUP);
-    public static final Block SHADESTONE = registerBlockWithItem(new Block(FabricBlockSettings.copyOf(STONE).requiresTool().breakByTool(FabricToolTags.PICKAXES,5)), "shadestone", ItemRegistry.GROUP);
+    public static final Block MIDSTONE = registerBlockWithItem(new Block(FabricBlockSettings.copyOf(STONE).requiresTool().breakByTool(FabricToolTags.PICKAXES,4)), "midstone", ItemRegistry.GROUP);
+    public static final Block SHADESTONE = registerBlockWithItem(new Block(FabricBlockSettings.copyOf(STONE).requiresTool().breakByTool(FabricToolTags.PICKAXES,4)), "shadestone", ItemRegistry.GROUP);
     public static final Block ANCIENT_GLASS_SHARD = registerBlockWithItem(new Block(FabricBlockSettings.copyOf(GLASS).noCollision()), "ancient_glass_shard", ItemRegistry.GROUP);
     public static final Block SMALL_ANCIENT_GLASS_SHARD = registerBlockWithItem(new Block(FabricBlockSettings.copyOf(GLASS).noCollision()), "small_ancient_glass_shard", ItemRegistry.GROUP);
     public static final Block ANCIENT_GLASS = registerBlockWithItem(new CrystalBlock(FabricBlockSettings.copyOf(GLASS)), "ancient_glass", ItemRegistry.GROUP);
     public static final Block BLACK_SAND = registerBlockWithItem(new FallingBlock(FabricBlockSettings.copyOf(SAND).breakByTool(FabricToolTags.SHOVELS)), "black_sand", ItemRegistry.GROUP);
     public static final Block EXP_SHROOM_STEM = registerBlockWithItem(new ExpShroomStemBlock(FabricBlockSettings.copyOf(BAMBOO).breakByTool(FabricToolTags.AXES)), "experience_mushroom_stem", ItemRegistry.GROUP);
+    public static final Block EXP_SHROOM_CAP = registerBlockWithItem(new Block(FabricBlockSettings.copyOf(RED_MUSHROOM_BLOCK).breakByTool(FabricToolTags.AXES)), "experience_mushroom_cap", ItemRegistry.GROUP);
 
     // TODO finalize name
     // TODO change jsons to new name
