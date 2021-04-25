@@ -1,6 +1,7 @@
 package com.skyternity.bottomless;
 
 import com.skyternity.bottomless.blocks.BlockRegistry;
+import com.skyternity.bottomless.entities.EntityRegistry;
 import com.skyternity.bottomless.items.ItemRegistry;
 import com.skyternity.bottomless.worldgen.dimensions.DimensionRegistry;
 import com.skyternity.bottomless.worldgen.features.FeatureRegistry;
@@ -23,6 +24,7 @@ public class BottomlessMain implements ModInitializer {
         //TODO: Initializer
         ItemRegistry.init();
         BlockRegistry.init();
+        EntityRegistry.init();
         DimensionRegistry.init();
         FeatureRegistry.init();
     }

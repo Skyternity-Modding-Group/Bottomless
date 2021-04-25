@@ -24,6 +24,7 @@ public class ItemRegistry {
     public static final Item SMALL_CRYSTAL = register(BlockRegistry.SMALL_CRYSTAL, "small_crystal", new Item.Settings().group(GROUP));
     public static final Item CRYSTAL_PILLAR = register(BlockRegistry.CRYSTAL_PILLAR, "crystal_pillar", new Item.Settings().group(GROUP));
     public static final Item GEYSER = register(BlockRegistry.GEYSER, "geyser", new Item.Settings().group(GROUP));
+    public static final Item POROUS_SHADESTONE = register(BlockRegistry.POROUS_SHADESTONE, "porous_shadestone", new Item.Settings().group(GROUP));
 
     // TODO finalize name
     public static final Item TEST_GLOW_BLOCK = register(BlockRegistry.TEST_GLOW_BLOCK, "testglowblock", new Item.Settings().group(GROUP));
