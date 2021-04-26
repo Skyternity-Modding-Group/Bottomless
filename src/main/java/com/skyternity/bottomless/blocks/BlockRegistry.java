@@ -8,6 +8,7 @@ import net.minecraft.block.Block;
 import static net.minecraft.block.Blocks.*;
 
 import net.minecraft.block.FallingBlock;
+import net.minecraft.block.MapColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.util.Identifier;
@@ -22,9 +23,10 @@ public class BlockRegistry {
     public static final Block ANCIENT_GLASS = registerBlockWithItem(new CrystalBlock(FabricBlockSettings.copyOf(GLASS)), "ancient_glass", ItemRegistry.GROUP);
     public static final Block BLACK_SAND = registerBlockWithItem(new FallingBlock(FabricBlockSettings.copyOf(SAND).breakByTool(FabricToolTags.SHOVELS)), "black_sand", ItemRegistry.GROUP);
     public static final Block EXP_SHROOM_STEM = registerBlockWithItem(new ExpShroomStemBlock(FabricBlockSettings.copyOf(BAMBOO).breakByTool(FabricToolTags.AXES)), "experience_mushroom_stem", ItemRegistry.GROUP);
-    public static final Block EXP_SHROOM_CAP = registerBlockWithItem(new ExpShroomCapBlock(FabricBlockSettings.copyOf(RED_MUSHROOM_BLOCK).breakByTool(FabricToolTags.AXES).ticksRandomly()), "experience_mushroom_cap", ItemRegistry.GROUP);
-    public static final Block GEYSER = register(new Geyser(FabricBlockSettings.copyOf(STONE).breakByTool(FabricToolTags.PICKAXES, 5).nonOpaque()), "geyser");
-    public static final Block POROUS_SHADESTONE = register(new PorousShadestone(FabricBlockSettings.copyOf(STONE).breakByTool(FabricToolTags.PICKAXES, 5)), "porous_shadestone");
+    public static final Block EXP_SHROOM_CAP = registerBlockWithItem(new Block(FabricBlockSettings.copyOf(RED_MUSHROOM_BLOCK).mapColor(MapColor.DARK_AQUA)), "experience_mushroom_cap", ItemRegistry.GROUP);
+    public static final Block EXP_SHROOM_CAP_SOURCE = registerBlockWithItem(new ExpShroomCapBlock(FabricBlockSettings.copyOf(RED_MUSHROOM_BLOCK).mapColor(MapColor.TEAL).breakByTool(FabricToolTags.AXES).ticksRandomly()), "experience_mushroom_cap_source", ItemRegistry.GROUP);
+    public static final Block GEYSER = registerBlockWithItem(new Geyser(FabricBlockSettings.copyOf(STONE).breakByTool(FabricToolTags.PICKAXES, 5).nonOpaque()), "geyser", ItemRegistry.GROUP);
+    public static final Block POROUS_SHADESTONE = registerBlockWithItem(new PorousShadestone(FabricBlockSettings.copyOf(STONE).breakByTool(FabricToolTags.PICKAXES, 5)), "porous_shadestone", ItemRegistry.GROUP);
 
     // TODO finalize name
     // TODO change jsons to new name

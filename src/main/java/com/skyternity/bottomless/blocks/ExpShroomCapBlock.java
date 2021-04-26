@@ -43,35 +43,46 @@ public class ExpShroomCapBlock extends Block implements Fertilizable {
     }
 
     public void grow(ServerWorld world, Random random, BlockPos pos, BlockState state) {
-        int stemLength = this.countStemLength(world, pos);
-        if(stemLength <= 5){ //its a bug or glitch or whatever is that, but that 5 is actually 7. so like, a+2; keep that in mind.
-            if(world.getBlockState(pos.up()).getBlock() == Blocks.AIR && world.getBlockState(pos.down(stemLength+1)) == BlockRegistry.MIDSTONE.getDefaultState()){
-                world.setBlockState(pos.up(), BlockRegistry.EXP_SHROOM_CAP.getDefaultState());
+        Block soil = BlockRegistry.MIDSTONE;
+        int stemLength = this.countBlocksBelow(world, pos, BlockRegistry.EXP_SHROOM_STEM);
+        int capLenght = this.countBlocksBelow(world, pos, BlockRegistry.EXP_SHROOM_CAP);
+        System.out.println(stemLength + " - " + capLenght);
+        if(stemLength < 2){
+            if(world.getBlockState(pos.up()).getBlock() == Blocks.AIR && world.getBlockState(pos.down(stemLength+1)) == soil.getDefaultState()){
+                world.setBlockState(pos.up(), BlockRegistry.EXP_SHROOM_CAP_SOURCE.getDefaultState());
                 world.setBlockState(pos, BlockRegistry.EXP_SHROOM_STEM.getDefaultState());
                 world.updateNeighbors(pos.up(), world.getBlockState(pos.up()).getBlock());
                 world.updateNeighbors(pos, world.getBlockState(pos).getBlock());
             }
-        }else{
-            //cant grow more
+        }
+        if(capLenght < 4 && stemLength <= 2){
+            if(world.getBlockState(pos.up()).getBlock() == Blocks.AIR){
+                world.setBlockState(pos.up(), BlockRegistry.EXP_SHROOM_CAP_SOURCE.getDefaultState());
+                world.setBlockState(pos, BlockRegistry.EXP_SHROOM_CAP.getDefaultState());
+                world.updateNeighbors(pos.up(), world.getBlockState(pos.up()).getBlock());
+                world.updateNeighbors(pos, world.getBlockState(pos).getBlock());
+            }
         }
     }
 
-    protected int countStemLength(BlockView world, BlockPos pos) {
+    public static int countBlocksBelow(BlockView world, BlockPos sourcePos, Block blockToSearchFor) {
         int i;
-        for(i = 0; i < 16 && world.getBlockState(pos.down(i + 1)).isOf(BlockRegistry.EXP_SHROOM_STEM); ++i) {
+        for(i = 0; i < 16 && world.getBlockState(sourcePos.down(i + 1)).isOf(blockToSearchFor); ++i) {
         }
         return i;
     }
 
+
     @Override
     public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
-        if(world.getBlockState(pos.down()) == BlockRegistry.EXP_SHROOM_STEM.getDefaultState()){
+        /**if(world.getBlockState(pos.down()) == BlockRegistry.EXP_SHROOM_STEM.getDefaultState()){
             return true;
         }else if(world.getBlockState(pos.down()).isSolidBlock(world, pos)){
             return true;
         }else{
             return false;
-        }
+        }**/
+        return true;
     }
 
     @Override
@@ -89,7 +100,7 @@ public class ExpShroomCapBlock extends Block implements Fertilizable {
             player.giveItemStack(new ItemStack((Items.EXPERIENCE_BOTTLE)));
             if(!player.isCreative()){
                 handItem.decrement(1);
-                world.setBlockState(pos, Blocks.AIR.getDefaultState());
+                world.setBlockState(pos, BlockRegistry.EXP_SHROOM_CAP.getDefaultState());
                 world.updateNeighbors(pos, world.getBlockState(pos).getBlock());
             }
             return ActionResult.success(world.isClient);
