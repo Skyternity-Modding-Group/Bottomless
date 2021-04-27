@@ -7,6 +7,7 @@ import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.block.Block;
 import static net.minecraft.block.Blocks.*;
 
+import net.minecraft.block.EnchantingTableBlock;
 import net.minecraft.block.FallingBlock;
 import net.minecraft.block.MapColor;
 import net.minecraft.item.Item;
@@ -27,6 +28,9 @@ public class BlockRegistry {
     public static final Block EXP_SHROOM_CAP_SOURCE = registerBlockWithItem(new ExpShroomCapBlock(FabricBlockSettings.copyOf(RED_MUSHROOM_BLOCK).mapColor(MapColor.TEAL).breakByTool(FabricToolTags.AXES).ticksRandomly()), "experience_mushroom_cap_source", ItemRegistry.GROUP);
     public static final Block GEYSER = registerBlockWithItem(new Geyser(FabricBlockSettings.copyOf(STONE).breakByTool(FabricToolTags.PICKAXES, 5).nonOpaque()), "geyser", ItemRegistry.GROUP);
     public static final Block POROUS_SHADESTONE = registerBlockWithItem(new PorousShadestone(FabricBlockSettings.copyOf(STONE).breakByTool(FabricToolTags.PICKAXES, 5)), "porous_shadestone", ItemRegistry.GROUP);
+    public static final Block PURPLE_STONE_BRICKS = registerBlockWithItem(new Block(FabricBlockSettings.copyOf(STONE_BRICKS).strength(3.0f, 12).breakByTool(FabricToolTags.PICKAXES, 3).requiresTool()), "purple_stone_bricks", ItemRegistry.GROUP);
+    public static final Block ENCHANTED_PURPLE_STONE_BRICKS = registerBlockWithItem(new EnchantedBrickBlock(FabricBlockSettings.copyOf(STONE_BRICKS).strength(3.0f, 12).breakByTool(FabricToolTags.PICKAXES, 3).requiresTool()), "enchanted_purple_stone_bricks", ItemRegistry.GROUP);
+
 
     // TODO finalize name
     // TODO change jsons to new name
