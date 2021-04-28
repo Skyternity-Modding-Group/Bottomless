@@ -59,7 +59,46 @@ public class EnchGammastone extends Block implements BlockEntityProvider {
                     for (int i = 0; i < enchIds.length; i++){
                         enchantments[i] = Registry.ENCHANTMENT.get(Identifier.tryParse(enchIds[i]));
                         if(enchIds[0] != "blank"){
-                            //apply enchant to entity
+                            /**
+                             * minecraft:protection
+                             * minecraft:fire_protection
+                             * minecraft:feather_falling
+                             * minecraft:blast_protection
+                             * minecraft:projectile_protection
+                             * minecraft:respiration
+                             * minecraft:aqua_affinity
+                             * minecraft:thorns
+                             * minecraft:depth_strider
+                             * minecraft:frost_walker
+                             * minecraft:binding_curse
+                             * minecraft:soul_speed
+                             * minecraft:sharpness
+                             * minecraft:smite
+                             * minecraft:bane_of_arthropods
+                             * minecraft:knockback
+                             * minecraft:fire_aspect
+                             * minecraft:looting
+                             * minecraft:sweeping
+                             * minecraft:efficiency
+                             * minecraft:silk_touch
+                             * minecraft:unbreaking
+                             * minecraft:fortune
+                             * minecraft:power
+                             * minecraft:punch
+                             * minecraft:flame
+                             * minecraft:infinity
+                             * minecraft:luck_of_the_sea
+                             * minecraft:lure
+                             * minecraft:loyalty
+                             * minecraft:impaling
+                             * minecraft:riptide
+                             * minecraft:channeling
+                             * minecraft:multishot
+                             * minecraft:quick_charge
+                             * minecraft:piercing
+                             * minecraft:mending
+                             * minecraft:vanishing_curse
+                             */
                         }
                     }
                 }
@@ -123,5 +162,31 @@ public class EnchGammastone extends Block implements BlockEntityProvider {
             world.spawnEntity(dropStackEntity);
             dropStackEntity.setPos(pos.getX(), pos.getY(), pos.getZ());
         }
+    }
+
+    @Override
+    public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
+        BlockEntity blockEntity = world.getBlockEntity(pos);
+        if(blockEntity instanceof EnchGammastoneTileEntity){
+            BlockEntity enchGammastoneTe = blockEntity;
+            ItemStack dropStack = new ItemStack(BlockRegistry.ENCHANTED_GAMMASTONE_BRICKS.asItem());
+            String[] enchIds = ((EnchGammastoneTileEntity) enchGammastoneTe).getEnchantmentFromTile();
+            if(enchIds != null){
+                Enchantment[] enchantments = new Enchantment[enchIds.length];
+                Map<Enchantment, Integer> enchMap = EnchantmentHelper.get(dropStack);
+                for (int i = 0; i < enchIds.length; i++){
+                    enchantments[i] = Registry.ENCHANTMENT.get(Identifier.tryParse(enchIds[i]));
+                    if(enchIds[0] != "blank"){
+                        enchMap.put(enchantments[i], 1);
+                    }
+                }
+                EnchantmentHelper.set(enchMap, dropStack);
+                //dropStack? why are you not enchanted????
+                return dropStack;
+            }
+
+        }
+        System.out.println("returned new stack");
+        return new ItemStack(world.getBlockState(pos).getBlock().asItem());
     }
 }
