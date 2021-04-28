@@ -18,6 +18,8 @@ public class BottomlessMain implements ModInitializer {
     public static final String MOD_ID = "bottomless";
     public static final String MOD_NAME = "Bottomless";
 
+	// EA-Sports: "Pichu was here"
+
     @Override
     public void onInitialize() {
         log(Level.INFO, "Initializing");
