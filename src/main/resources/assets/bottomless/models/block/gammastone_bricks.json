@@ -1,6 +1,6 @@
 {
     "parent":"block/cube_all",
     "textures":{
-        "all":"bottomless:block/purple_stone_bricks"
+        "all":"bottomless:block/gammastone_bricks"
     }
 }
