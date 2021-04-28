@@ -57,9 +57,8 @@ public class EnchGammastone extends Block implements BlockEntityProvider {
                     Enchantment[] enchantments = new Enchantment[enchIds.length];
                     for (int i = 0; i < enchIds.length; i++){
                         enchantments[i] = Registry.ENCHANTMENT.get(Identifier.tryParse(enchIds[i]));
-                        System.out.println(enchIds[i]);
-                        if(enchantments[i] !=null){
-                            System.out.println(enchantments[i]);
+                        if(enchIds[0] != "blank"){
+                            //apply enchant to entity
                         }
                     }
                 }
@@ -81,11 +80,20 @@ public class EnchGammastone extends Block implements BlockEntityProvider {
                     String[] enchIds = new String[listTag.size()];
                     for (int i = 0; i < listTag.size(); i++){
                         CompoundTag bookNBT = EnchantedBookItem.getEnchantmentNbt(bookStack).getCompound(i);
-                        //System.out.println("applied " + bookNBT.getString("id") + " with the level of " + bookNBT.getInt("lvl"));
                         enchIds[i] = bookNBT.getString("id");
                     }
-                    stoneTe.putEnchantmentsToTile(enchIds);
-                    return ActionResult.SUCCESS;
+
+                    if(player.isCreative()){
+                        stoneTe.putEnchantmentsToTile(enchIds);
+                        return ActionResult.SUCCESS;
+                    }else{
+                        if(player.experienceLevel >= 15){
+                            player.addExperience(-255);
+                            stoneTe.putEnchantmentsToTile(enchIds);
+                            return ActionResult.SUCCESS;
+                        }
+                    }
+
                 }
             }
         }
