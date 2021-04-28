@@ -5,7 +5,7 @@ import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.EnchantedBookItem;
@@ -15,12 +15,16 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Map;
 
 public class EnchGammastone extends Block implements BlockEntityProvider {
 
@@ -48,12 +52,18 @@ public class EnchGammastone extends Block implements BlockEntityProvider {
         if(!world.isClient){
             BlockEntity tileEntity = world.getBlockEntity(pos);
             if(tileEntity instanceof EnchGammastoneTileEntity){
-                int[] enchIds = ((EnchGammastoneTileEntity) tileEntity).getEnchantmentFromTile();
-                Enchantment[] enchantments = new Enchantment[enchIds.length];
-                for (int i = 0; i < enchIds.length; i++){
-                    enchantments[i] = Enchantment.byRawId(enchIds[i]);
-                    System.out.println("Block's Stored enchants: " + enchantments[i].getName(enchantments[i].getMinLevel()).toString());
+                String[] enchIds = ((EnchGammastoneTileEntity) tileEntity).getEnchantmentFromTile();
+                if(enchIds != null){
+                    Enchantment[] enchantments = new Enchantment[enchIds.length];
+                    for (int i = 0; i < enchIds.length; i++){
+                        enchantments[i] = Registry.ENCHANTMENT.get(Identifier.tryParse(enchIds[i]));
+                        System.out.println(enchIds[i]);
+                        if(enchantments[i] !=null){
+                            System.out.println(enchantments[i]);
+                        }
+                    }
                 }
+
             }
         }
 
@@ -64,14 +74,18 @@ public class EnchGammastone extends Block implements BlockEntityProvider {
         if(!world.isClient){
             BlockEntity tileEntity = world.getBlockEntity(pos);
             if(tileEntity instanceof EnchGammastoneTileEntity){
+                EnchGammastoneTileEntity stoneTe = (EnchGammastoneTileEntity) tileEntity;
                 ItemStack bookStack = player.getStackInHand(hand);
                 if(bookStack.getItem() instanceof EnchantedBookItem){
                     ListTag listTag = EnchantedBookItem.getEnchantmentNbt(bookStack);
-                    for (int i = 0; i < listTag.stream().count(); i++){
+                    String[] enchIds = new String[listTag.size()];
+                    for (int i = 0; i < listTag.size(); i++){
                         CompoundTag bookNBT = EnchantedBookItem.getEnchantmentNbt(bookStack).getCompound(i);
-                        System.out.println(bookNBT);
+                        //System.out.println("applied " + bookNBT.getString("id") + " with the level of " + bookNBT.getInt("lvl"));
+                        enchIds[i] = bookNBT.getString("id");
                     }
-                    return ActionResult.success(world.isClient);
+                    stoneTe.putEnchantmentsToTile(enchIds);
+                    return ActionResult.SUCCESS;
                 }
             }
         }
