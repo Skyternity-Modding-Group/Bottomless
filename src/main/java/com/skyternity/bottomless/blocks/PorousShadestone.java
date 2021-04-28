@@ -1,15 +1,14 @@
 package com.skyternity.bottomless.blocks;
 
 import com.skyternity.bottomless.BottomlessMain;
+import com.skyternity.bottomless.blocks.geyser.GeyserSource;
 import com.skyternity.bottomless.entities.PorousShadestoneEntity;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
@@ -21,8 +20,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.List;
 
 public class PorousShadestone extends BlockWithEntity implements GeyserSource {
     public PorousShadestone(Settings settings) {

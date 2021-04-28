@@ -1,5 +1,6 @@
-package com.skyternity.bottomless.blocks;
+package com.skyternity.bottomless.blocks.exp_mushroom;
 
+import com.skyternity.bottomless.blocks.BlockRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;

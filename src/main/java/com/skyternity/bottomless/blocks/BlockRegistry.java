@@ -1,15 +1,21 @@
 package com.skyternity.bottomless.blocks;
 
 import com.skyternity.bottomless.BottomlessMain;
+import com.skyternity.bottomless.blocks.enchanted_gammastone.EnchGammastone;
+import com.skyternity.bottomless.blocks.enchanted_gammastone.EnchGammastoneTileEntity;
+import com.skyternity.bottomless.blocks.exp_mushroom.ExpShroomCapBlock;
+import com.skyternity.bottomless.blocks.exp_mushroom.ExpShroomStemBlock;
+import com.skyternity.bottomless.blocks.geyser.Geyser;
 import com.skyternity.bottomless.items.ItemRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.block.Block;
 import static net.minecraft.block.Blocks.*;
+import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 
-import net.minecraft.block.EnchantingTableBlock;
 import net.minecraft.block.FallingBlock;
 import net.minecraft.block.MapColor;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.util.Identifier;
@@ -29,7 +35,8 @@ public class BlockRegistry {
     public static final Block GEYSER = registerBlockWithItem(new Geyser(FabricBlockSettings.copyOf(STONE).breakByTool(FabricToolTags.PICKAXES, 5).nonOpaque()), "geyser", ItemRegistry.GROUP);
     public static final Block POROUS_SHADESTONE = registerBlockWithItem(new PorousShadestone(FabricBlockSettings.copyOf(STONE).breakByTool(FabricToolTags.PICKAXES, 5)), "porous_shadestone", ItemRegistry.GROUP);
     public static final Block GAMMASTONE_BRICKS = registerBlockWithItem(new Block(FabricBlockSettings.copyOf(STONE_BRICKS).strength(3.0f, 12).breakByTool(FabricToolTags.PICKAXES, 3).requiresTool()), "gammastone_bricks", ItemRegistry.GROUP);
-    public static final Block ENCHANTED_GAMMASTONE_BRICKS = registerBlockWithItem(new EnchantedBrickBlock(FabricBlockSettings.copyOf(STONE_BRICKS).strength(3.0f, 12).breakByTool(FabricToolTags.PICKAXES, 3).requiresTool()), "enchanted_gammastone_bricks", ItemRegistry.GROUP);
+    public static final Block ENCHANTED_GAMMASTONE_BRICKS = registerBlockWithItem(new EnchGammastone(FabricBlockSettings.copyOf(STONE_BRICKS).strength(3.0f, 12).breakByTool(FabricToolTags.PICKAXES, 3).requiresTool()), "enchanted_gammastone_bricks", ItemRegistry.GROUP);
+    public static final BlockEntityType<EnchGammastoneTileEntity> ENCH_GAMMASTONE_TILEENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, BottomlessMain.MOD_ID + ":enchanted_gammastone_bricks", FabricBlockEntityTypeBuilder.create(EnchGammastoneTileEntity::new, ENCHANTED_GAMMASTONE_BRICKS).build());
 
 
     // TODO finalize name

@@ -1,4 +1,4 @@
-package com.skyternity.bottomless.blocks;
+package com.skyternity.bottomless.blocks.geyser;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;

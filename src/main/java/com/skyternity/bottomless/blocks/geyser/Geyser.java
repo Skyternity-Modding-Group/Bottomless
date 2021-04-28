@@ -1,5 +1,6 @@
-package com.skyternity.bottomless.blocks;
+package com.skyternity.bottomless.blocks.geyser;
 
+import com.skyternity.bottomless.blocks.BlockUtil;
 import com.skyternity.bottomless.entities.EntityRegistry;
 import com.skyternity.bottomless.entities.GeyserEntity;
 import com.skyternity.bottomless.particles.ParticleRegistry;
