@@ -1,6 +1,6 @@
 package com.skyternity.bottomless.entities;
 
-import com.skyternity.bottomless.blocks.GeyserSource;
+import com.skyternity.bottomless.blocks.geyser.GeyserSource;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
