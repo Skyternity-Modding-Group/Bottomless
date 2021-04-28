@@ -16,22 +16,9 @@ public class ItemRegistry {
 
     // Items
 
-    /** // Blockitems
-    public static final Item MIDSTONE = registerBlockItem(BlockRegistry.MIDSTONE, "midstone", new Item.Settings().group(GROUP));
-    public static final Item SHADESTONE = registerBlockItem(BlockRegistry.SHADESTONE, "shadestone", new Item.Settings().group(GROUP));
-    public static final Item CRYSTAL = registerBlockItem(BlockRegistry.ANCIENT_GLASS_SHARD, "ancient_glass_shard", new Item.Settings().group(GROUP));
-    public static final Item SMALL_CRYSTAL = registerBlockItem(BlockRegistry.SMALL_ANCIENT_GLASS_SHARD, "small_ancient_glass_shard", new Item.Settings().group(GROUP));
-    public static final Item CRYSTAL_PILLAR = registerBlockItem(BlockRegistry.ANCIENT_GLASS, "ancient_glass", new Item.Settings().group(GROUP));
-    public static final Item GEYSER = register(BlockRegistry.GEYSER, "geyser", new Item.Settings().group(GROUP));
-    public static final Item POROUS_SHADESTONE = register(BlockRegistry.POROUS_SHADESTONE, "porous_shadestone", new Item.Settings().group(GROUP));
+    // BlockItems
+    public static final Item ENCHANTED_GAMMASTONE_BRICKS = register(new EnchGammastoneItem(BlockRegistry.ENCHANTED_GAMMASTONE_BRICKS, new Item.Settings().group(GROUP)), "enchanted_gammastone_bricks");
 
-    // TODO finalize name
-    public static final Item TEST_GLOW_BLOCK = registerBlockItem(BlockRegistry.TEST_GLOW_BLOCK, "testglowblock", new Item.Settings().group(GROUP));
-
-     Who the hell registers block items by hand? Who was your lazyness teacher, huh? i wanna speak with them, NOW!
-     -Laz
-
-    **/
 
     // Methods
     public static void init () {

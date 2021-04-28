@@ -1,5 +1,6 @@
 package com.skyternity.bottomless.blocks.enchanted_gammastone;
 
+import com.skyternity.bottomless.blocks.BlockRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
@@ -7,10 +8,10 @@ import net.minecraft.block.ShapeContext;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.enchantment.*;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.EnchantedBookItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.util.ActionResult;
@@ -98,5 +99,29 @@ public class EnchGammastone extends Block implements BlockEntityProvider {
             }
         }
         return ActionResult.PASS;
+    }
+
+    @Override
+    public void afterBreak(World world, PlayerEntity player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity, ItemStack stack) {
+        if(blockEntity instanceof EnchGammastoneTileEntity){
+            BlockEntity enchGammastoneTe = (EnchGammastoneTileEntity)blockEntity;
+            ItemStack dropStack = new ItemStack(BlockRegistry.ENCHANTED_GAMMASTONE_BRICKS.asItem());
+            String[] enchIds = ((EnchGammastoneTileEntity) enchGammastoneTe).getEnchantmentFromTile();
+            if(enchIds != null){
+                Enchantment[] enchantments = new Enchantment[enchIds.length];
+                Map<Enchantment, Integer> enchMap = EnchantmentHelper.get(dropStack);
+                for (int i = 0; i < enchIds.length; i++){
+                    enchantments[i] = Registry.ENCHANTMENT.get(Identifier.tryParse(enchIds[i]));
+                    if(enchIds[0] != "blank"){
+                        enchMap.put(enchantments[i], 1);
+                    }
+                }
+                EnchantmentHelper.set(enchMap, dropStack);
+            }
+
+            ItemEntity dropStackEntity = new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), dropStack);
+            world.spawnEntity(dropStackEntity);
+            dropStackEntity.setPos(pos.getX(), pos.getY(), pos.getZ());
+        }
     }
 }

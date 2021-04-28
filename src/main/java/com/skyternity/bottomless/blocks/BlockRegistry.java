@@ -36,7 +36,7 @@ public class BlockRegistry {
     public static final Block GEYSER = registerBlockWithItem(new Geyser(FabricBlockSettings.copyOf(STONE).breakByTool(FabricToolTags.PICKAXES, 5).nonOpaque()), "geyser", ItemRegistry.GROUP);
     public static final Block POROUS_SHADESTONE = registerBlockWithItem(new PorousShadestone(FabricBlockSettings.copyOf(STONE).breakByTool(FabricToolTags.PICKAXES, 5)), "porous_shadestone", ItemRegistry.GROUP);
     public static final Block GAMMASTONE_BRICKS = registerBlockWithItem(new Gammastone(FabricBlockSettings.copyOf(STONE_BRICKS).strength(3.0f, 12).breakByTool(FabricToolTags.PICKAXES, 3).requiresTool()), "gammastone_bricks", ItemRegistry.GROUP);
-    public static final Block ENCHANTED_GAMMASTONE_BRICKS = registerBlockWithItem(new EnchGammastone(FabricBlockSettings.copyOf(STONE_BRICKS).strength(3.0f, 12).breakByTool(FabricToolTags.PICKAXES, 3).requiresTool()), "enchanted_gammastone_bricks", ItemRegistry.GROUP);
+    public static final Block ENCHANTED_GAMMASTONE_BRICKS = register(new EnchGammastone(FabricBlockSettings.copyOf(STONE_BRICKS).strength(3.0f, 12).breakByTool(FabricToolTags.PICKAXES, 3).requiresTool()), "enchanted_gammastone_bricks");
     public static final BlockEntityType<EnchGammastoneTileEntity> ENCH_GAMMASTONE_TILEENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, BottomlessMain.MOD_ID + ":enchanted_gammastone_bricks", FabricBlockEntityTypeBuilder.create(EnchGammastoneTileEntity::new, ENCHANTED_GAMMASTONE_BRICKS).build());
 
 
