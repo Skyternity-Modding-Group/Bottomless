@@ -1,7 +1,9 @@
 package com.skyternity.bottomless.entities;
 
+import com.skyternity.bottomless.BottomlessMain;
 import com.skyternity.bottomless.blocks.geyser.GeyserSource;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
@@ -27,10 +29,16 @@ public class GeyserEntity extends BlockEntity implements BlockEntityClientSerial
         GeyserEntity entity = (GeyserEntity) world.getBlockEntity(pos);
         assert entity != null;
 
+        BottomlessMain.LOGGER.info("Geyser pos: " + pos);
         BlockPos sourcePos = pos.down();
+        BottomlessMain.LOGGER.info("Block pos: " + sourcePos);
         BlockState sourceState = world.getBlockState(sourcePos);
-        if(sourceState.getBlock() instanceof GeyserSource) {
-            entity.valid = true;
+        BottomlessMain.LOGGER.info("Block state" + sourceState);
+        Block sourceBlock = sourceState.getBlock();
+        BottomlessMain.LOGGER.info("Block: " + sourceBlock);
+        if(sourceBlock instanceof GeyserSource) {
+            GeyserSource source = (GeyserSource) sourceState.getBlock();
+            entity.valid = source.isApplyingEffect(world.getBlockState(sourcePos), world, sourcePos);
 
             // Clients end here
             if(world.isClient)

@@ -11,6 +11,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.PotionItem;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -32,9 +33,17 @@ public class PorousShadestone extends BlockWithEntity implements GeyserSource {
         assert blockEntity != null;
 
         Potion potion = Registry.POTION.get(new Identifier(blockEntity.potion));
-        potion.getEffects().forEach(effect -> {
-            entity.addStatusEffect(new StatusEffectInstance(effect.getEffectType(), 50));
-        });
+        potion.getEffects().forEach(effect ->
+                entity.addStatusEffect(new StatusEffectInstance(effect.getEffectType(), 50)));
+    }
+
+    @Override
+    public boolean isApplyingEffect(BlockState state, World world, BlockPos pos) {
+        BottomlessMain.LOGGER.info("Recv pos" + pos);
+        PorousShadestoneEntity blockEntity = (PorousShadestoneEntity) world.getBlockEntity(pos);
+        assert blockEntity != null;
+
+        return !blockEntity.potion.equals("minecraft:empty");
     }
 
     @Nullable
@@ -54,22 +63,12 @@ public class PorousShadestone extends BlockWithEntity implements GeyserSource {
         PorousShadestoneEntity entity = (PorousShadestoneEntity) world.getBlockEntity(pos);
         assert entity != null;
 
-        BottomlessMain.LOGGER.info(entity.potion);
-
-        boolean success = entity.isStackPotion(stack);
+        boolean success = stack.getItem() instanceof PotionItem;
         if (!success) {
             return ActionResult.PASS;
         } else {
             entity.setPotion(stack);
 
-            // Hack to rerender block
-            BottomlessMain.LOGGER.info("Rerender time");
-            world.setBlockState(pos, state, 8);
-
-            if (!world.isClient) {
-                entity.markDirty();
-                entity.sync();
-            }
             return ActionResult.SUCCESS;
         }
     }

@@ -17,26 +17,14 @@ public class PorousShadestoneEntity extends BlockEntity implements BlockEntityCl
     public String potion = "minecraft:empty";
 
     public PorousShadestoneEntity(BlockPos pos, BlockState state) {
-        super(EntityRegistry.GEYSER_ENTITY_TYPE, pos, state);
-    }
-
-    public boolean isStackPotion(ItemStack stack) {
-        if (!(stack.getItem() instanceof PotionItem))
-            return false;
-
-        Potion potion = PotionUtil.getPotion(stack);
-        BottomlessMain.LOGGER.info("Potion: " + potion);
-        return true;
+        super(EntityRegistry.POROUS_SHADESTONE_ENTITY, pos, state);
     }
 
     public void setPotion(ItemStack stack) {
         Potion potion = PotionUtil.getPotion(stack);
         Identifier potionId = Registry.POTION.getId(potion);
-        BottomlessMain.LOGGER.info("ID: " + potionId);
-        String potionString = potionId.toString();
-        BottomlessMain.LOGGER.info("String: " + potionString);
 
-        this.potion = potionString;
+        this.potion = potionId.toString();
     }
 
     @Override

@@ -7,4 +7,6 @@ import net.minecraft.world.World;
 
 public interface GeyserSource {
     <T extends LivingEntity> void applyGeyserEffect(BlockState state, World world, BlockPos pos, T entity);
+
+    boolean isApplyingEffect(BlockState state, World world, BlockPos pos);
 }
