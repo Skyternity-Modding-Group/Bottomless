@@ -30,16 +30,19 @@ public class Gammastone extends Block {
 
                 ListTag listTag = EnchantedBookItem.getEnchantmentNbt(bookStack);
                 String[] enchIds = new String[listTag.size()];
+                int[] enchLvls = new int[listTag.size()];
                 for (int i = 0; i < listTag.size(); i++){
                     CompoundTag bookNBT = EnchantedBookItem.getEnchantmentNbt(bookStack).getCompound(i);
                     enchIds[i] = bookNBT.getString("id");
+                    enchLvls[i] = bookNBT.getInt("lvl");
                 }
 
                 if(player.isCreative()){
                     world.setBlockState(pos, BlockRegistry.ENCHANTED_GAMMASTONE_BRICKS.getDefaultState());
                     BlockEntity tileEntity = world.getBlockEntity(pos);
                     EnchGammastoneTileEntity stoneTe = (EnchGammastoneTileEntity) tileEntity;
-                    stoneTe.putEnchantmentsToTile(enchIds);
+                    stoneTe.putEnchantmentIdsToTile(enchIds);
+                    stoneTe.putEnchantmentLvlsToTile(enchLvls);
                     return ActionResult.SUCCESS;
                 }else{
                     if(player.experienceLevel >= 15){
@@ -47,7 +50,8 @@ public class Gammastone extends Block {
                         world.setBlockState(pos, BlockRegistry.ENCHANTED_GAMMASTONE_BRICKS.getDefaultState());
                         BlockEntity tileEntity = world.getBlockEntity(pos);
                         EnchGammastoneTileEntity stoneTe = (EnchGammastoneTileEntity) tileEntity;
-                        stoneTe.putEnchantmentsToTile(enchIds);
+                        stoneTe.putEnchantmentIdsToTile(enchIds);
+                        stoneTe.putEnchantmentLvlsToTile(enchLvls);
                         return ActionResult.SUCCESS;
                     }
                 }

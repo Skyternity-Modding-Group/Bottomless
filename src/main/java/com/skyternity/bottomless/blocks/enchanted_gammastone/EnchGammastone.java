@@ -53,17 +53,21 @@ public class EnchGammastone extends Block implements BlockEntityProvider {
         if(!world.isClient){
             BlockEntity tileEntity = world.getBlockEntity(pos);
             if(tileEntity instanceof EnchGammastoneTileEntity){
-                String[] enchIds = ((EnchGammastoneTileEntity) tileEntity).getEnchantmentFromTile();
+                String[] enchIds = ((EnchGammastoneTileEntity) tileEntity).getEnchantmentIdsFromTile();
+                int[] enchLvls = ((EnchGammastoneTileEntity) tileEntity).getEnchantmentLvlsFromTile();
                 if(enchIds != null){
                     Enchantment[] enchantments = new Enchantment[enchIds.length];
                     for (int i = 0; i < enchIds.length; i++){
                         enchantments[i] = Registry.ENCHANTMENT.get(Identifier.tryParse(enchIds[i]));
                         if(enchIds[0] != "blank"){
+                            if(enchantments[i] == Enchantments.THORNS){
+                                ThornsEnchantment.getDamageAmount(enchLvls[i], world.random);
+                            }
                             /**
                              * minecraft:protection
                              * minecraft:fire_protection
                              * minecraft:feather_falling
-                             * minecraft:blast_protection
+                             * -minecraft:blast_protection
                              * minecraft:projectile_protection
                              * minecraft:respiration
                              * minecraft:aqua_affinity
@@ -72,11 +76,11 @@ public class EnchGammastone extends Block implements BlockEntityProvider {
                              * minecraft:frost_walker
                              * minecraft:binding_curse
                              * minecraft:soul_speed
-                             * minecraft:sharpness
-                             * minecraft:smite
+                             * -minecraft:sharpness
+                             * -minecraft:smite
                              * minecraft:bane_of_arthropods
                              * minecraft:knockback
-                             * minecraft:fire_aspect
+                             * -minecraft:fire_aspect
                              * minecraft:looting
                              * minecraft:sweeping
                              * minecraft:efficiency
@@ -85,7 +89,7 @@ public class EnchGammastone extends Block implements BlockEntityProvider {
                              * minecraft:fortune
                              * minecraft:power
                              * minecraft:punch
-                             * minecraft:flame
+                             * -minecraft:flame
                              * minecraft:infinity
                              * minecraft:luck_of_the_sea
                              * minecraft:lure
@@ -118,18 +122,22 @@ public class EnchGammastone extends Block implements BlockEntityProvider {
                 if(bookStack.getItem() instanceof EnchantedBookItem){
                     ListTag listTag = EnchantedBookItem.getEnchantmentNbt(bookStack);
                     String[] enchIds = new String[listTag.size()];
+                    int[] enchLvls = new int[listTag.size()];
                     for (int i = 0; i < listTag.size(); i++){
                         CompoundTag bookNBT = EnchantedBookItem.getEnchantmentNbt(bookStack).getCompound(i);
                         enchIds[i] = bookNBT.getString("id");
+                        enchLvls[i] = bookNBT.getInt("lvl");
                     }
 
                     if(player.isCreative()){
-                        stoneTe.putEnchantmentsToTile(enchIds);
+                        stoneTe.putEnchantmentIdsToTile(enchIds);
+                        stoneTe.putEnchantmentLvlsToTile(enchLvls);
                         return ActionResult.SUCCESS;
                     }else{
                         if(player.experienceLevel >= 15){
                             player.addExperience(-255);
-                            stoneTe.putEnchantmentsToTile(enchIds);
+                            stoneTe.putEnchantmentIdsToTile(enchIds);
+                            stoneTe.putEnchantmentLvlsToTile(enchLvls);
                             return ActionResult.SUCCESS;
                         }
                     }
@@ -145,14 +153,15 @@ public class EnchGammastone extends Block implements BlockEntityProvider {
         if(blockEntity instanceof EnchGammastoneTileEntity){
             BlockEntity enchGammastoneTe = (EnchGammastoneTileEntity)blockEntity;
             ItemStack dropStack = new ItemStack(BlockRegistry.ENCHANTED_GAMMASTONE_BRICKS.asItem());
-            String[] enchIds = ((EnchGammastoneTileEntity) enchGammastoneTe).getEnchantmentFromTile();
+            String[] enchIds = ((EnchGammastoneTileEntity) enchGammastoneTe).getEnchantmentIdsFromTile();
+            int[] enchLvls = ((EnchGammastoneTileEntity) enchGammastoneTe).getEnchantmentLvlsFromTile();
             if(enchIds != null){
                 Enchantment[] enchantments = new Enchantment[enchIds.length];
                 Map<Enchantment, Integer> enchMap = EnchantmentHelper.get(dropStack);
                 for (int i = 0; i < enchIds.length; i++){
                     enchantments[i] = Registry.ENCHANTMENT.get(Identifier.tryParse(enchIds[i]));
                     if(enchIds[0] != "blank"){
-                        enchMap.put(enchantments[i], 1);
+                        enchMap.put(enchantments[i], enchLvls[i]);
                     }
                 }
                 EnchantmentHelper.set(enchMap, dropStack);
@@ -170,14 +179,15 @@ public class EnchGammastone extends Block implements BlockEntityProvider {
         if(blockEntity instanceof EnchGammastoneTileEntity){
             BlockEntity enchGammastoneTe = blockEntity;
             ItemStack dropStack = new ItemStack(BlockRegistry.ENCHANTED_GAMMASTONE_BRICKS.asItem());
-            String[] enchIds = ((EnchGammastoneTileEntity) enchGammastoneTe).getEnchantmentFromTile();
+            String[] enchIds = ((EnchGammastoneTileEntity) enchGammastoneTe).getEnchantmentIdsFromTile();
+            int[] enchLvls = ((EnchGammastoneTileEntity) enchGammastoneTe).getEnchantmentLvlsFromTile();
             if(enchIds != null){
                 Enchantment[] enchantments = new Enchantment[enchIds.length];
                 Map<Enchantment, Integer> enchMap = EnchantmentHelper.get(dropStack);
                 for (int i = 0; i < enchIds.length; i++){
                     enchantments[i] = Registry.ENCHANTMENT.get(Identifier.tryParse(enchIds[i]));
                     if(enchIds[0] != "blank"){
-                        enchMap.put(enchantments[i], 1);
+                        enchMap.put(enchantments[i], enchLvls[i]);
                     }
                 }
                 EnchantmentHelper.set(enchMap, dropStack);

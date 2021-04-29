@@ -11,6 +11,7 @@ import net.minecraft.world.World;
 public class EnchGammastoneTileEntity extends BlockEntity implements BlockEntityTicker{
 
     private String[] containedEncIds = {"blank"};
+    private int[] containedEncLvls = {0};
 
     public EnchGammastoneTileEntity(BlockPos pos, BlockState state) {
         super(BlockRegistry.ENCH_GAMMASTONE_TILEENTITY, pos, state);
@@ -22,6 +23,7 @@ public class EnchGammastoneTileEntity extends BlockEntity implements BlockEntity
 
         for (int i = 0; i < this.containedEncIds.length; i++){
             tag.putString("containedEnchant_"+i, this.containedEncIds[i]);
+            tag.putInt("containedEnchantLvl_"+i, this.containedEncLvls[i]);
         }
 
         tag.putInt("containedEnchatnAmount", this.containedEncIds.length);
@@ -35,18 +37,26 @@ public class EnchGammastoneTileEntity extends BlockEntity implements BlockEntity
 
         int length = tag.getInt("containedEnchatnAmount");
         this.containedEncIds = new String[length];
+        this.containedEncLvls = new int[length];
 
         for (int i = 0; i < length; i++){
             this.containedEncIds[i] = tag.getString("containedEnchant_"+i);
+            this.containedEncLvls[i] = tag.getInt("containedEnchantLvl_"+i);
         }
     }
 
-    public String[] getEnchantmentFromTile(){
+    public String[] getEnchantmentIdsFromTile(){
         return this.containedEncIds;
     }
+    public int[] getEnchantmentLvlsFromTile(){
+        return this.containedEncLvls;
+    }
 
-    public void putEnchantmentsToTile(String[] enchIds){
+    public void putEnchantmentIdsToTile(String[] enchIds){
         this.containedEncIds = enchIds;
+    }
+    public void putEnchantmentLvlsToTile(int[] enchLvls){
+        this.containedEncLvls = enchLvls;
     }
 
 

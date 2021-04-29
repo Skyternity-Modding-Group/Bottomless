@@ -40,10 +40,13 @@ public class EnchGammastoneItem extends BlockItem {
                     Set<Enchantment> enchSet = enchMap.keySet();
                     Enchantment[] enchArray = enchSet.toArray(new Enchantment[enchSet.size()]);
                     String[] enchIds = new String[enchMap.size()];
+                    int[] enchLvls = new int[enchMap.size()];
                     for (int i = 0; i < enchMap.size(); i++){
                         enchIds[i] = Registry.ENCHANTMENT.getId(enchArray[i]).toString();
+                        enchLvls[i] = enchMap.get(enchArray[i]);
                     }
-                    stoneTe.putEnchantmentsToTile(enchIds);
+                    stoneTe.putEnchantmentIdsToTile(enchIds);
+                    stoneTe.putEnchantmentLvlsToTile(enchLvls);
                 }
 
             }
