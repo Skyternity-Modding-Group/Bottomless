@@ -8,7 +8,12 @@ import net.minecraft.block.ShapeContext;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.enchantment.*;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.ItemEntity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.EnchantedBookItem;
 import net.minecraft.item.ItemStack;
@@ -19,6 +24,8 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
@@ -50,43 +57,116 @@ public class EnchGammastone extends Block implements BlockEntityProvider {
 
     @Override
     public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
-        if(!world.isClient){
+        if(!world.isClient && entity instanceof LivingEntity){
             BlockEntity tileEntity = world.getBlockEntity(pos);
             if(tileEntity instanceof EnchGammastoneTileEntity){
                 String[] enchIds = ((EnchGammastoneTileEntity) tileEntity).getEnchantmentIdsFromTile();
                 int[] enchLvls = ((EnchGammastoneTileEntity) tileEntity).getEnchantmentLvlsFromTile();
                 if(enchIds != null){
                     Enchantment[] enchantments = new Enchantment[enchIds.length];
-                    for (int i = 0; i < enchIds.length; i++){
+                    boolean hasFlame = false;
+                    boolean hasBaneOfArthropods = false;
+                    float damageModifier = 0;
+                    int knockbackLevel = -1;
+                    int fireAspectLevel = -1;
+                    int lootingLevel = -1;
+                    int featherFallingLevel = -1;
+
+                    for (int i = 0; i < enchIds.length; i++){//Get buffs
                         enchantments[i] = Registry.ENCHANTMENT.get(Identifier.tryParse(enchIds[i]));
                         if(enchIds[0] != "blank"){
-                            if(enchantments[i] == Enchantments.THORNS){
-                                ThornsEnchantment.getDamageAmount(enchLvls[i], world.random);
-                            }
+                            //Outgoing buffs
                             /**
-                             * minecraft:protection
-                             * minecraft:fire_protection
-                             * minecraft:feather_falling
+                             * ProtectionEnchantment
+                             * RespirationEnchantment
+                             * AquaAffinityEnchantment
+                             * ThornsEnchantment
+                             * DepthStriderEnchantment
+                             * FrostWalkerEnchantment
+                             * SoulSpeedEnchantment
+                             * DamageEnchantment
+                             * KnockbackEnchantment
+                             * FireAspectEnchantment
+                             * LuckEnchantment
+                             * SweepingEnchantment
+                             * EfficiencyEnchantment
+                             * SilkTouchEnchantment
+                             * UnbreakingEnchantment
+                             * PowerEnchantment
+                             * PunchEnchantment
+                             * FlameEnchantment
+                             * InfinityEnchantment
+                             * LuckEnchantment
+                             * LureEnchantment
+                             * LoyaltyEnchantment
+                             * ImpalingEnchantment
+                             * RiptideEnchantment
+                             * ChannelingEnchantment
+                             * MultishotEnchantment
+                             * QuickChargeEnchantment
+                             * PiercingEnchantment
+                             * MendingEnchantment
+                             *
+                             * VanishingCurseEnchantment
+                             * BindingCurseEnchantment
+                             */
+
+                            if(enchantments[i] instanceof DamageEnchantment){
+                                damageModifier = enchantments[i].getAttackDamage(enchLvls[i], EntityGroup.DEFAULT);
+                                if(enchantments[i] == Enchantments.BANE_OF_ARTHROPODS){
+                                    hasBaneOfArthropods = true;
+                                }
+                            }
+                            if(enchantments[i] instanceof FlameEnchantment){
+                                hasFlame = true;
+                            }
+                            if(enchantments[i] instanceof FireAspectEnchantment){
+                                fireAspectLevel = enchLvls[i];
+                            }
+                            if(enchantments[i] instanceof KnockbackEnchantment){
+                                knockbackLevel = enchLvls[i];
+                            }
+                            if(enchantments[i] instanceof LuckEnchantment){
+                                if(enchantments[i] == Enchantments.LOOTING || enchantments[i] == Enchantments.FORTUNE){
+                                    lootingLevel = enchLvls[i];
+                                }
+                            }
+                            if(enchantments[i] instanceof ProtectionEnchantment){
+                                if(((ProtectionEnchantment)enchantments[i]).protectionType == ProtectionEnchantment.Type.FALL){
+
+                                }
+                            }
+                            //Incoming buffs
+
+                            /**
+                             * - : has texture
+                             * | : has code
+                             * [] : other method for effects
+                             * ? : what should it do?
+                             *
+                             * ?minecraft:protection
+                             * ?minecraft:fire_protection
+                             * minecraft:feather_falling [fallOn]
                              * -minecraft:blast_protection
-                             * minecraft:projectile_protection
-                             * minecraft:respiration
-                             * minecraft:aqua_affinity
-                             * minecraft:thorns
-                             * minecraft:depth_strider
+                             * ?minecraft:projectile_protection
+                             * ?minecraft:respiration
+                             * ?minecraft:aqua_affinity
+                             * |minecraft:thorns
+                             * ?minecraft:depth_strider
                              * minecraft:frost_walker
                              * minecraft:binding_curse
-                             * minecraft:soul_speed
-                             * -minecraft:sharpness
-                             * -minecraft:smite
-                             * minecraft:bane_of_arthropods
-                             * minecraft:knockback
-                             * -minecraft:fire_aspect
+                             * ?minecraft:soul_speed
+                             * |-minecraft:sharpness
+                             * |-minecraft:smite
+                             * |minecraft:bane_of_arthropods
+                             * |minecraft:knockback
+                             * |-minecraft:fire_aspect
                              * minecraft:looting
-                             * minecraft:sweeping
-                             * minecraft:efficiency
-                             * minecraft:silk_touch
+                             * |minecraft:sweeping
+                             * ?minecraft:efficiency
+                             * ?minecraft:silk_touch
                              * minecraft:unbreaking
-                             * minecraft:fortune
+                             * |minecraft:fortune
                              * minecraft:power
                              * minecraft:punch
                              * -minecraft:flame
@@ -100,9 +180,29 @@ public class EnchGammastone extends Block implements BlockEntityProvider {
                              * minecraft:multishot
                              * minecraft:quick_charge
                              * minecraft:piercing
-                             * minecraft:mending
+                             * ?minecraft:mending
                              * minecraft:vanishing_curse
                              */
+                        }
+                    }
+                    for (int i = 0; i < enchIds.length; i++){ //apply outgoing effects
+                        if(enchIds[0] != "blank"){
+                            if(enchantments[i] == Enchantments.THORNS) {
+                                entity.damage(DamageSource.GENERIC, ThornsEnchantment.getDamageAmount(enchLvls[i], world.random) + damageModifier);
+                                if(hasBaneOfArthropods && ((LivingEntity) entity).getGroup() == EntityGroup.ARTHROPOD){
+                                    ((LivingEntity)entity).addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS,5, 3));
+                                }
+                                if(knockbackLevel >= 1){
+                                    ((LivingEntity)entity).takeKnockback(knockbackLevel, entity.getBlockPos().getX(), entity.getBlockPos().getZ());
+                                }
+                                if(fireAspectLevel >= 1){
+                                    entity.setOnFireFor(fireAspectLevel * 4);
+                                }
+                                if(lootingLevel >= 1){
+                                    //It seems like its impossible to implement looting enchantment =(
+                                }
+                            }
+
                         }
                     }
                 }
@@ -155,6 +255,7 @@ public class EnchGammastone extends Block implements BlockEntityProvider {
             ItemStack dropStack = new ItemStack(BlockRegistry.ENCHANTED_GAMMASTONE_BRICKS.asItem());
             String[] enchIds = ((EnchGammastoneTileEntity) enchGammastoneTe).getEnchantmentIdsFromTile();
             int[] enchLvls = ((EnchGammastoneTileEntity) enchGammastoneTe).getEnchantmentLvlsFromTile();
+            boolean hasVanishing = false;
             if(enchIds != null){
                 Enchantment[] enchantments = new Enchantment[enchIds.length];
                 Map<Enchantment, Integer> enchMap = EnchantmentHelper.get(dropStack);
@@ -163,13 +264,18 @@ public class EnchGammastone extends Block implements BlockEntityProvider {
                     if(enchIds[0] != "blank"){
                         enchMap.put(enchantments[i], enchLvls[i]);
                     }
+                    if(enchantments[i] == Enchantments.VANISHING_CURSE){
+                        hasVanishing = true;
+                    }
                 }
                 EnchantmentHelper.set(enchMap, dropStack);
             }
 
-            ItemEntity dropStackEntity = new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), dropStack);
-            world.spawnEntity(dropStackEntity);
-            dropStackEntity.setPos(pos.getX(), pos.getY(), pos.getZ());
+            if(!hasVanishing){
+                ItemEntity dropStackEntity = new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), dropStack);
+                world.spawnEntity(dropStackEntity);
+                dropStackEntity.setPos(pos.getX(), pos.getY(), pos.getZ());
+            }
         }
     }
 
