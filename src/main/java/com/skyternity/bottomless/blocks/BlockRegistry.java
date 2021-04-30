@@ -1,6 +1,8 @@
 package com.skyternity.bottomless.blocks;
 
 import com.skyternity.bottomless.BottomlessMain;
+import com.skyternity.bottomless.blocks.ancient_glass.AncientGlassBlock;
+import com.skyternity.bottomless.blocks.ancient_glass.AncientGlassShard;
 import com.skyternity.bottomless.blocks.enchanted_gammastone.EnchGammastone;
 import com.skyternity.bottomless.blocks.enchanted_gammastone.EnchGammastoneTileEntity;
 import com.skyternity.bottomless.blocks.enchanted_gammastone.Gammastone;
@@ -26,9 +28,9 @@ public class BlockRegistry {
     // Bwocks
     public static final Block MIDSTONE = registerBlockWithItem(new Block(FabricBlockSettings.copyOf(STONE).requiresTool().breakByTool(FabricToolTags.PICKAXES,4)), "midstone", ItemRegistry.GROUP);
     public static final Block SHADESTONE = registerBlockWithItem(new Block(FabricBlockSettings.copyOf(STONE).requiresTool().breakByTool(FabricToolTags.PICKAXES,4)), "shadestone", ItemRegistry.GROUP);
-    public static final Block ANCIENT_GLASS_SHARD = registerBlockWithItem(new Block(FabricBlockSettings.copyOf(GLASS).noCollision()), "ancient_glass_shard", ItemRegistry.GROUP);
-    public static final Block SMALL_ANCIENT_GLASS_SHARD = registerBlockWithItem(new Block(FabricBlockSettings.copyOf(GLASS).noCollision()), "small_ancient_glass_shard", ItemRegistry.GROUP);
-    public static final Block ANCIENT_GLASS = registerBlockWithItem(new CrystalBlock(FabricBlockSettings.copyOf(GLASS)), "ancient_glass", ItemRegistry.GROUP);
+    public static final Block ANCIENT_GLASS_SHARD = registerBlockWithItem(new AncientGlassShard(FabricBlockSettings.copyOf(GLASS).noCollision()), "ancient_glass_shard", ItemRegistry.GROUP);
+    public static final Block SMALL_ANCIENT_GLASS_SHARD = registerBlockWithItem(new AncientGlassShard(FabricBlockSettings.copyOf(GLASS).noCollision()), "small_ancient_glass_shard", ItemRegistry.GROUP);
+    public static final Block ANCIENT_GLASS = registerBlockWithItem(new AncientGlassBlock(FabricBlockSettings.copyOf(GLASS)), "ancient_glass", ItemRegistry.GROUP);
     public static final Block BLACK_SAND = registerBlockWithItem(new FallingBlock(FabricBlockSettings.copyOf(SAND).breakByTool(FabricToolTags.SHOVELS)), "black_sand", ItemRegistry.GROUP);
     public static final Block EXP_SHROOM_STEM = registerBlockWithItem(new ExpShroomStemBlock(FabricBlockSettings.copyOf(BAMBOO).breakByTool(FabricToolTags.AXES)), "experience_mushroom_stem", ItemRegistry.GROUP);
     public static final Block EXP_SHROOM_CAP = registerBlockWithItem(new Block(FabricBlockSettings.copyOf(RED_MUSHROOM_BLOCK).mapColor(MapColor.DARK_AQUA)), "experience_mushroom_cap", ItemRegistry.GROUP);

@@ -1,4 +1,4 @@
-package com.skyternity.bottomless.blocks;
+package com.skyternity.bottomless.blocks.ancient_glass;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -11,8 +11,9 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 
-public class CrystalBlock extends PillarBlock {
-    protected CrystalBlock(Settings settings) {
+public class AncientGlassBlock extends PillarBlock {
+
+    public AncientGlassBlock(Settings settings) {
         super(settings);
     }
 

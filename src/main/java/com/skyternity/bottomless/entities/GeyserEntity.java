@@ -29,13 +29,14 @@ public class GeyserEntity extends BlockEntity implements BlockEntityClientSerial
         GeyserEntity entity = (GeyserEntity) world.getBlockEntity(pos);
         assert entity != null;
 
-        BottomlessMain.LOGGER.info("Geyser pos: " + pos);
+        //When ya debug, please at least comment them out when ya done... -laz
+        //BottomlessMain.LOGGER.info("Geyser pos: " + pos);
         BlockPos sourcePos = pos.down();
-        BottomlessMain.LOGGER.info("Block pos: " + sourcePos);
+        //BottomlessMain.LOGGER.info("Block pos: " + sourcePos);
         BlockState sourceState = world.getBlockState(sourcePos);
-        BottomlessMain.LOGGER.info("Block state" + sourceState);
+        //BottomlessMain.LOGGER.info("Block state" + sourceState);
         Block sourceBlock = sourceState.getBlock();
-        BottomlessMain.LOGGER.info("Block: " + sourceBlock);
+        //BottomlessMain.LOGGER.info("Block: " + sourceBlock);
         if(sourceBlock instanceof GeyserSource) {
             GeyserSource source = (GeyserSource) sourceState.getBlock();
             entity.valid = source.isApplyingEffect(world.getBlockState(sourcePos), world, sourcePos);

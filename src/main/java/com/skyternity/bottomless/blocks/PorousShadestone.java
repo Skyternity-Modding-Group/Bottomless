@@ -39,7 +39,8 @@ public class PorousShadestone extends BlockWithEntity implements GeyserSource {
 
     @Override
     public boolean isApplyingEffect(BlockState state, World world, BlockPos pos) {
-        BottomlessMain.LOGGER.info("Recv pos" + pos);
+        //When ya debug, please at least comment them out when ya done... -laz
+        //BottomlessMain.LOGGER.info("Recv pos" + pos);
         PorousShadestoneEntity blockEntity = (PorousShadestoneEntity) world.getBlockEntity(pos);
         assert blockEntity != null;
 
