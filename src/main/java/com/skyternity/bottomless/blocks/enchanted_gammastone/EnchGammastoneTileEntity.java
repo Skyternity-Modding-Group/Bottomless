@@ -62,6 +62,8 @@ public class EnchGammastoneTileEntity extends BlockEntity implements BlockEntity
 
     @Override
     public void tick(World world, BlockPos pos, BlockState state, BlockEntity blockEntity) {
+            if(world.isClient){
 
+            }
     }
 }
