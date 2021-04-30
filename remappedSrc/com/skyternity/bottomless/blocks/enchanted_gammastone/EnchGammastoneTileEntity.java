@@ -4,7 +4,7 @@ import com.skyternity.bottomless.blocks.BlockRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
-import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -18,7 +18,7 @@ public class EnchGammastoneTileEntity extends BlockEntity implements BlockEntity
     }
 
     @Override
-    public NbtCompound writeNbt(NbtCompound tag) {
+    public CompoundTag writeNbt(CompoundTag tag) {
         super.writeNbt(tag);
 
         for (int i = 0; i < this.containedEncIds.length; i++){
@@ -32,7 +32,7 @@ public class EnchGammastoneTileEntity extends BlockEntity implements BlockEntity
     }
 
     @Override
-    public void readNbt(NbtCompound tag) {
+    public void readNbt(CompoundTag tag) {
         super.readNbt(tag);
 
         int length = tag.getInt("containedEnchatnAmount");

@@ -13,7 +13,7 @@ import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.gen.surfacebuilder.SurfaceBuilder;
 
 public class DimensionRegistry {
-    public static final RegistryKey<World> BOTTOMLESS_WORLD_KEY = RegistryKey.of(Registry.WORLD_KEY, new Identifier(BottomlessMain.MOD_ID, "the_void"));
+    public static final RegistryKey<World> BOTTOMLESS_WORLD_KEY = RegistryKey.of(Registry.DIMENSION, new Identifier(BottomlessMain.MOD_ID, "the_void"));
     public static final RegistryKey<DimensionType> TYPE = RegistryKey.of(Registry.DIMENSION_TYPE_KEY, new Identifier(BottomlessMain.MOD_ID, "the_void"));
 
     public static final SurfaceBuilder<BottomlessSurfaceBuilderConfig> BOTTOMLESS_SURFACE_BUILDER =

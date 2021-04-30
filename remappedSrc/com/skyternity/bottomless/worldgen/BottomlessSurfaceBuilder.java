@@ -14,9 +14,8 @@ public class BottomlessSurfaceBuilder extends SurfaceBuilder<BottomlessSurfaceBu
         super(BottomlessSurfaceBuilderConfig.CODEC);
     }
 
-
     @Override
-    public void generate(Random random, Chunk chunk, Biome biome, int x, int z, int y, double noise, BlockState defaultBlock, BlockState defaultFluid, int seaLevel, int i, long l, BottomlessSurfaceBuilderConfig config) {
+    public void generate(Random random, Chunk chunk, Biome biome, int x, int z, int y, double noise, BlockState defaultBlock, BlockState defaultFluid, int seaLevel, long seed, BottomlessSurfaceBuilderConfig config) {
         BlockState topState = config.getTopMaterial();
         BlockState underState = config.getUnderMaterial();
         BlockPos.Mutable mut = new BlockPos.Mutable();

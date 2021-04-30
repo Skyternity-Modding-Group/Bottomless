@@ -18,7 +18,7 @@ public class FeatureRegistry {
             Registry.register(Registry.FEATURE, new Identifier(BottomlessMain.MOD_ID, "pillar_feature"), new PillarFeature(DefaultFeatureConfig.CODEC));
     public static final ConfiguredFeature<?, ?> PILLAR_CONFIGURED = PILLAR_FEATURE.configure(FeatureConfig.DEFAULT)
             .decorate(Decorator.CHANCE.configure(new ChanceDecoratorConfig(50)));
-    public static final RegistryKey<ConfiguredFeature<?, ?>> PILLAR_KEY = RegistryKey.of(Registry.CONFIGURED_FEATURE_KEY,
+    public static final RegistryKey<ConfiguredFeature<?, ?>> PILLAR_KEY = RegistryKey.of(Registry.CONFIGURED_FEATURE_WORLDGEN,
             new Identifier(BottomlessMain.MOD_ID, "pillar_feature"));
 
     public static void init() {

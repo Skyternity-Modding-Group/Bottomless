@@ -8,7 +8,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.math.*;
 import net.minecraft.world.World;
 
@@ -66,14 +66,14 @@ public class GeyserEntity extends BlockEntity implements BlockEntityClientSerial
     }
 
     @Override
-    public void readNbt(NbtCompound tag) {
+    public void readNbt(CompoundTag tag) {
         super.readNbt(tag);
 
         valid = tag.getBoolean("valid");
     }
 
     @Override
-    public NbtCompound writeNbt(NbtCompound tag) {
+    public CompoundTag writeNbt(CompoundTag tag) {
         super.writeNbt(tag);
 
         tag.putBoolean("valid", valid);
@@ -82,12 +82,12 @@ public class GeyserEntity extends BlockEntity implements BlockEntityClientSerial
     }
 
     @Override
-    public void fromClientTag(NbtCompound tag) {
+    public void fromClientTag(CompoundTag tag) {
         valid = tag.getBoolean("valid");
     }
 
     @Override
-    public NbtCompound toClientTag(NbtCompound tag) {
+    public CompoundTag toClientTag(CompoundTag tag) {
         super.writeNbt(tag);
 
         tag.putBoolean("valid", valid);

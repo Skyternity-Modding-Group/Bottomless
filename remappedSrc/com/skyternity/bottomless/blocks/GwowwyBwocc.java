@@ -43,9 +43,9 @@ public class GwowwyBwocc extends Block {
     }
 
     @Override
-    public void onSteppedOn(World world, BlockPos pos, BlockState state, Entity entity) {
+    public void onSteppedOn(World world, BlockPos pos, Entity entity) {
         light(world.getBlockState(pos), world, pos);
-        super.onSteppedOn(world, pos, state, entity);
+        super.onSteppedOn(world, pos, entity);
     }
 
     @Override

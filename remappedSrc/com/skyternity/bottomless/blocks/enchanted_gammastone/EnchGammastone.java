@@ -17,8 +17,8 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.EnchantedBookItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtList;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
@@ -220,11 +220,11 @@ public class EnchGammastone extends Block implements BlockEntityProvider {
                 EnchGammastoneTileEntity stoneTe = (EnchGammastoneTileEntity) tileEntity;
                 ItemStack bookStack = player.getStackInHand(hand);
                 if(bookStack.getItem() instanceof EnchantedBookItem){
-                    NbtList listTag = EnchantedBookItem.getEnchantmentNbt(bookStack);
+                    ListTag listTag = EnchantedBookItem.getEnchantmentNbt(bookStack);
                     String[] enchIds = new String[listTag.size()];
                     int[] enchLvls = new int[listTag.size()];
                     for (int i = 0; i < listTag.size(); i++){
-                        NbtCompound bookNBT = EnchantedBookItem.getEnchantmentNbt(bookStack).getCompound(i);
+                        CompoundTag bookNBT = EnchantedBookItem.getEnchantmentNbt(bookStack).getCompound(i);
                         enchIds[i] = bookNBT.getString("id");
                         enchLvls[i] = bookNBT.getInt("lvl");
                     }
