@@ -1,16 +1,10 @@
 package com.skyternity.bottomless.blocks.enchanted_gammastone;
 
 import com.skyternity.bottomless.blocks.BlockRegistry;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockEntityProvider;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.ShapeContext;
+import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.enchantment.*;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityGroup;
-import net.minecraft.entity.ItemEntity;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.*;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -19,13 +13,13 @@ import net.minecraft.item.EnchantedBookItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
@@ -33,6 +27,7 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class EnchGammastone extends Block implements BlockEntityProvider {
 
@@ -55,22 +50,28 @@ public class EnchGammastone extends Block implements BlockEntityProvider {
         return SHAPE_ALMOSTFULL;
     }
 
+    //This section of the code is protected by The LAZ Seal. if you want to touch it, then dont. thats what it means. only Laz is approved of touching this, cuz only he knows how it works.
     @Override
     public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
-        if(!world.isClient && entity instanceof LivingEntity){
+        if(!world.isClient){
             BlockEntity tileEntity = world.getBlockEntity(pos);
             if(tileEntity instanceof EnchGammastoneTileEntity){
                 String[] enchIds = ((EnchGammastoneTileEntity) tileEntity).getEnchantmentIdsFromTile();
                 int[] enchLvls = ((EnchGammastoneTileEntity) tileEntity).getEnchantmentLvlsFromTile();
-                if(enchIds != null){
+                int blockHP = ((EnchGammastoneTileEntity) tileEntity).getBlockHealth();
+                int timer = ((EnchGammastoneTileEntity) tileEntity).getDamageTimer();
+                if(enchIds != null && blockHP > 0 && timer <= 0){
                     Enchantment[] enchantments = new Enchantment[enchIds.length];
                     boolean hasFlame = false;
                     boolean hasBaneOfArthropods = false;
+                    int thornsLevel = -1;
                     float damageModifier = 0;
                     int knockbackLevel = -1;
                     int fireAspectLevel = -1;
                     int lootingLevel = -1;
-                    int featherFallingLevel = -1;
+                    int protectionLevel = -1;
+                    int mendingLevel = -1;
+                    int durabilityDamageModifier = 0;
 
                     for (int i = 0; i < enchIds.length; i++){//Get buffs
                         enchantments[i] = Registry.ENCHANTMENT.get(Identifier.tryParse(enchIds[i]));
@@ -111,6 +112,9 @@ public class EnchGammastone extends Block implements BlockEntityProvider {
                              * BindingCurseEnchantment
                              */
 
+                            if(enchantments[i] == Enchantments.THORNS){
+                                thornsLevel = enchLvls[i];
+                            }
                             if(enchantments[i] instanceof DamageEnchantment){
                                 damageModifier = enchantments[i].getAttackDamage(enchLvls[i], EntityGroup.DEFAULT);
                                 if(enchantments[i] == Enchantments.BANE_OF_ARTHROPODS){
@@ -132,9 +136,25 @@ public class EnchGammastone extends Block implements BlockEntityProvider {
                                 }
                             }
                             if(enchantments[i] instanceof ProtectionEnchantment){
-                                if(((ProtectionEnchantment)enchantments[i]).protectionType == ProtectionEnchantment.Type.FALL){
+                                if(((ProtectionEnchantment)enchantments[i]).protectionType == ProtectionEnchantment.Type.ALL){
+                                    if(protectionLevel == -1){
+                                        protectionLevel = enchLvls[i];
+                                    }else{
+                                        protectionLevel += enchLvls[i];
+                                    }
+                                }else if(((ProtectionEnchantment)enchantments[i]).protectionType == ProtectionEnchantment.Type.FIRE){
 
                                 }
+                            }
+                            if(enchantments[i] instanceof UnbreakingEnchantment){
+                                if(protectionLevel == -1){
+                                    protectionLevel = enchLvls[i];
+                                }else{
+                                    protectionLevel += enchLvls[i];
+                                }
+                            }
+                            if(enchantments[i] instanceof MendingEnchantment){
+                                mendingLevel = enchLvls[i];
                             }
                             //Incoming buffs
 
@@ -144,11 +164,11 @@ public class EnchGammastone extends Block implements BlockEntityProvider {
                              * [] : other method for effects
                              * ? : what should it do?
                              *
-                             * ?minecraft:protection
-                             * ?minecraft:fire_protection
+                             * |minecraft:protection
+                             * minecraft:fire_protection
                              * minecraft:feather_falling [fallOn]
                              * -minecraft:blast_protection
-                             * ?minecraft:projectile_protection
+                             * minecraft:projectile_protection
                              * ?minecraft:respiration
                              * ?minecraft:aqua_affinity
                              * |minecraft:thorns
@@ -165,7 +185,7 @@ public class EnchGammastone extends Block implements BlockEntityProvider {
                              * |minecraft:sweeping
                              * ?minecraft:efficiency
                              * ?minecraft:silk_touch
-                             * minecraft:unbreaking
+                             * |minecraft:unbreaking
                              * |minecraft:fortune
                              * minecraft:power
                              * minecraft:punch
@@ -180,15 +200,17 @@ public class EnchGammastone extends Block implements BlockEntityProvider {
                              * minecraft:multishot
                              * minecraft:quick_charge
                              * minecraft:piercing
-                             * ?minecraft:mending
-                             * minecraft:vanishing_curse
+                             * |minecraft:mending
+                             * |minecraft:vanishing_curse
                              */
                         }
                     }
-                    for (int i = 0; i < enchIds.length; i++){ //apply outgoing effects
-                        if(enchIds[0] != "blank"){
-                            if(enchantments[i] == Enchantments.THORNS) {
-                                entity.damage(DamageSource.GENERIC, ThornsEnchantment.getDamageAmount(enchLvls[i], world.random) + damageModifier);
+                    if(enchIds[0] != "blank"){
+                        if(thornsLevel >= 1 && entity instanceof LivingEntity) {
+                            if(((LivingEntity) entity).canTakeDamage()){
+                                entity.damage(DamageSource.GENERIC, ThornsEnchantment.getDamageAmount(thornsLevel, world.random) + damageModifier);
+                                world.playSound(null, pos, SoundEvents.ENCHANT_THORNS_HIT, SoundCategory.BLOCKS, 1.0f, 1.0f);
+                                durabilityDamageModifier++;
                                 if(hasBaneOfArthropods && ((LivingEntity) entity).getGroup() == EntityGroup.ARTHROPOD){
                                     ((LivingEntity)entity).addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS,5, 3));
                                 }
@@ -201,10 +223,46 @@ public class EnchGammastone extends Block implements BlockEntityProvider {
                                 if(lootingLevel >= 1){
                                     //It seems like its impossible to implement looting enchantment =(
                                 }
-                            }
+                                if(protectionLevel >= 1){
+                                    if(protectionLevel >= durabilityDamageModifier){
+                                        int randomChance = ThreadLocalRandom.current().nextInt(0, 100 + 1);
+                                        if(randomChance >= 50 - (6*protectionLevel)){
+                                            if(protectionLevel - durabilityDamageModifier <= 0){
+                                                durabilityDamageModifier = 1;
+                                            }else{
+                                                durabilityDamageModifier = protectionLevel - durabilityDamageModifier;
+                                            }
+                                        }else{
+                                            durabilityDamageModifier = 0;
+                                        }
+                                    }else{
+                                        durabilityDamageModifier = durabilityDamageModifier - protectionLevel;
+                                    }
+                                }
 
+                                ((EnchGammastoneTileEntity) tileEntity).putBlockHealth(blockHP-durabilityDamageModifier);
+                                ((EnchGammastoneTileEntity) tileEntity).putDamageTimer(10);
+                            }
+                        }else if(entity instanceof ExperienceOrbEntity){
+                            if(mendingLevel >= 1 && blockHP < 1000){
+                                blockHP =+ (((ExperienceOrbEntity)entity).getExperienceAmount() + (2*mendingLevel));
+                                ((EnchGammastoneTileEntity) tileEntity).putBlockHealth(blockHP);
+                                entity.remove(Entity.RemovalReason.DISCARDED);
+                                world.playSound(null, pos, SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.BLOCKS, 0.6f, 1.0f);
+                            }
                         }
+
                     }
+
+
+                }else if(blockHP == 0){
+                    ItemEntity dropStackEntity = new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(BlockRegistry.GAMMASTONE_BRICKS));
+                    world.spawnEntity(dropStackEntity);
+                    world.setBlockState(pos, Blocks.AIR.getDefaultState());
+                    dropStackEntity.setPos(pos.getX(), pos.getY(), pos.getZ());
+                }else if(timer >= 0){
+                    timer--;
+                    ((EnchGammastoneTileEntity) tileEntity).putDamageTimer(timer);
                 }
 
             }
@@ -232,12 +290,14 @@ public class EnchGammastone extends Block implements BlockEntityProvider {
                     if(player.isCreative()){
                         stoneTe.putEnchantmentIdsToTile(enchIds);
                         stoneTe.putEnchantmentLvlsToTile(enchLvls);
+                        world.playSound(null, pos, SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS, 1.0f, 1.0f);
                         return ActionResult.SUCCESS;
                     }else{
                         if(player.experienceLevel >= 15){
                             player.addExperience(-255);
                             stoneTe.putEnchantmentIdsToTile(enchIds);
                             stoneTe.putEnchantmentLvlsToTile(enchLvls);
+                            world.playSound(null, pos, SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS, 1.0f, 1.0f);
                             return ActionResult.SUCCESS;
                         }
                     }

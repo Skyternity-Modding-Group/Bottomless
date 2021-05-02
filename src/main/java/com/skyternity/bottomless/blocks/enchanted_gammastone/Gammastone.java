@@ -10,6 +10,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
@@ -43,6 +45,7 @@ public class Gammastone extends Block {
                     EnchGammastoneTileEntity stoneTe = (EnchGammastoneTileEntity) tileEntity;
                     stoneTe.putEnchantmentIdsToTile(enchIds);
                     stoneTe.putEnchantmentLvlsToTile(enchLvls);
+                    world.playSound(null, pos, SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS, 1.0f, 1.0f);
                     return ActionResult.SUCCESS;
                 }else{
                     if(player.experienceLevel >= 15){
@@ -52,6 +55,7 @@ public class Gammastone extends Block {
                         EnchGammastoneTileEntity stoneTe = (EnchGammastoneTileEntity) tileEntity;
                         stoneTe.putEnchantmentIdsToTile(enchIds);
                         stoneTe.putEnchantmentLvlsToTile(enchLvls);
+                        world.playSound(null, pos, SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS, 1.0f, 1.0f);
                         return ActionResult.SUCCESS;
                     }
                 }

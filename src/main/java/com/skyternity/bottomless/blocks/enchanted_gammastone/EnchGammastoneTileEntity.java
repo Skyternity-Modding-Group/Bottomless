@@ -12,6 +12,10 @@ public class EnchGammastoneTileEntity extends BlockEntity implements BlockEntity
 
     private String[] containedEncIds = {"blank"};
     private int[] containedEncLvls = {0};
+    private int blockHealth = 1000;
+    private int featherFallLevel = 0;
+    private int fireResLevel = 0;
+    private int damageTimer = 0;
 
     public EnchGammastoneTileEntity(BlockPos pos, BlockState state) {
         super(BlockRegistry.ENCH_GAMMASTONE_TILEENTITY, pos, state);
@@ -26,6 +30,8 @@ public class EnchGammastoneTileEntity extends BlockEntity implements BlockEntity
             tag.putInt("containedEnchantLvl_"+i, this.containedEncLvls[i]);
         }
 
+        tag.putInt("blockHealth", this.blockHealth);
+        tag.putInt("damageTimer", this.damageTimer);
         tag.putInt("containedEnchatnAmount", this.containedEncIds.length);
 
         return tag;
@@ -43,6 +49,9 @@ public class EnchGammastoneTileEntity extends BlockEntity implements BlockEntity
             this.containedEncIds[i] = tag.getString("containedEnchant_"+i);
             this.containedEncLvls[i] = tag.getInt("containedEnchantLvl_"+i);
         }
+
+        this.blockHealth = tag.getInt("blockHealth");
+        this.damageTimer = tag.getInt("damageTimer");
     }
 
     public String[] getEnchantmentIdsFromTile(){
@@ -51,6 +60,8 @@ public class EnchGammastoneTileEntity extends BlockEntity implements BlockEntity
     public int[] getEnchantmentLvlsFromTile(){
         return this.containedEncLvls;
     }
+    public int getBlockHealth(){return this.blockHealth;}
+    public int getDamageTimer(){return this.damageTimer;}
 
     public void putEnchantmentIdsToTile(String[] enchIds){
         this.containedEncIds = enchIds;
@@ -58,6 +69,8 @@ public class EnchGammastoneTileEntity extends BlockEntity implements BlockEntity
     public void putEnchantmentLvlsToTile(int[] enchLvls){
         this.containedEncLvls = enchLvls;
     }
+    public void putBlockHealth(int hp){this.blockHealth = hp;}
+    public void putDamageTimer(int time){this.damageTimer = time;}
 
 
     @Override
