@@ -5,6 +5,7 @@ import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.enchantment.*;
 import net.minecraft.entity.*;
+import net.minecraft.entity.ai.TargetPredicate;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -208,7 +209,7 @@ public class EnchGammastone extends Block implements BlockEntityProvider {
                     if(enchIds[0] != "blank"){
                         if(thornsLevel >= 1 && entity instanceof LivingEntity) {
                             if(((LivingEntity) entity).canTakeDamage()){
-                                entity.damage(DamageSource.GENERIC, ThornsEnchantment.getDamageAmount(thornsLevel, world.random) + damageModifier);
+                                entity.damage(DamageSource.player(world.getClosestPlayer(TargetPredicate.DEFAULT, pos.getX(), pos.getY(), pos.getZ())), ThornsEnchantment.getDamageAmount(thornsLevel, world.random) + damageModifier);
                                 world.playSound(null, pos, SoundEvents.ENCHANT_THORNS_HIT, SoundCategory.BLOCKS, 1.0f, 1.0f);
                                 durabilityDamageModifier++;
                                 if(hasBaneOfArthropods && ((LivingEntity) entity).getGroup() == EntityGroup.ARTHROPOD){
@@ -245,8 +246,8 @@ public class EnchGammastone extends Block implements BlockEntityProvider {
                             }
                         }else if(entity instanceof ExperienceOrbEntity){
                             if(mendingLevel >= 1 && blockHP < 1000){
-                                blockHP =+ (((ExperienceOrbEntity)entity).getExperienceAmount() + (2*mendingLevel));
-                                ((EnchGammastoneTileEntity) tileEntity).putBlockHealth(blockHP);
+                                int additionalHp = ((EnchGammastoneTileEntity) tileEntity).getBlockHealth() + (((ExperienceOrbEntity)entity).getExperienceAmount() + (2*mendingLevel));
+                                ((EnchGammastoneTileEntity) tileEntity).putBlockHealth(additionalHp);
                                 entity.remove(Entity.RemovalReason.DISCARDED);
                                 world.playSound(null, pos, SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.BLOCKS, 0.6f, 1.0f);
                             }
