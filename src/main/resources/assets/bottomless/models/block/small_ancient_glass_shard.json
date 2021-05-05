@@ -1,6 +1,0 @@
-{
-    "parent":"block/cross",
-    "textures":{
-        "cross":"bottomless:block/small_ancient_glass_shard"
-    }
-}
