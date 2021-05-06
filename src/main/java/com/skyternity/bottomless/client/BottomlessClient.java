@@ -19,5 +19,6 @@ public class BottomlessClient implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlock(BlockRegistry.SMALL_ANCIENT_GLASS_SHARD, RenderLayer.getTranslucent());
         BlockRenderLayerMap.INSTANCE.putBlock(BlockRegistry.ANCIENT_GLASS, RenderLayer.getTranslucent());
         BlockRenderLayerMap.INSTANCE.putBlock(BlockRegistry.GEYSER, RenderLayer.getTranslucent());
+
     }
 }

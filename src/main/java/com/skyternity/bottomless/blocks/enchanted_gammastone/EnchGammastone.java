@@ -30,7 +30,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class EnchGammastone extends Block implements BlockEntityProvider {
+public class EnchGammastone extends Block implements BlockEntityProvider{
 
     private static final VoxelShape SHAPE_ALMOSTFULL = Block.createCuboidShape(0.9D, 0.9D, 0.9D, 15.9D, 15.9D, 15.9D);
 
@@ -366,4 +366,6 @@ public class EnchGammastone extends Block implements BlockEntityProvider {
         System.out.println("returned new stack");
         return new ItemStack(world.getBlockState(pos).getBlock().asItem());
     }
+
+
 }

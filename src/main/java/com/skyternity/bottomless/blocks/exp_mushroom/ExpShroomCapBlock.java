@@ -47,7 +47,6 @@ public class ExpShroomCapBlock extends Block implements Fertilizable {
         Block soil = BlockRegistry.MIDSTONE;
         int stemLength = this.countBlocksBelow(world, pos, BlockRegistry.EXP_SHROOM_STEM);
         int capLenght = this.countBlocksBelow(world, pos, BlockRegistry.EXP_SHROOM_CAP);
-        System.out.println(stemLength + " - " + capLenght);
         if(stemLength < 2){
             if(world.getBlockState(pos.up()).getBlock() == Blocks.AIR && world.getBlockState(pos.down(stemLength+1)) == soil.getDefaultState()){
                 world.setBlockState(pos.up(), BlockRegistry.EXP_SHROOM_CAP_SOURCE.getDefaultState());
