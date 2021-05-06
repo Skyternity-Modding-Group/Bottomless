@@ -21,20 +21,21 @@ import net.minecraft.block.MapColor;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
 public class BlockRegistry {
     // Bwocks
     public static final Block MIDSTONE = registerBlockWithItem(new Block(FabricBlockSettings.copyOf(STONE).requiresTool().breakByTool(FabricToolTags.PICKAXES,4)), "midstone", ItemRegistry.GROUP);
-    public static final Block SHADESTONE = registerBlockWithItem(new Block(FabricBlockSettings.copyOf(STONE).requiresTool().breakByTool(FabricToolTags.PICKAXES,4)), "shadestone", ItemRegistry.GROUP);
+    public static final Block SHADESTONE = registerBlockWithItem(new Block(FabricBlockSettings.copyOf(STONE).requiresTool().sounds(BlockSoundGroup.DEEPSLATE).breakByTool(FabricToolTags.PICKAXES,4)), "shadestone", ItemRegistry.GROUP);
     public static final Block ANCIENT_GLASS_SHARD = registerBlockWithItem(new AncientGlassShard(FabricBlockSettings.copyOf(GLASS).noCollision()), "ancient_glass_shard", ItemRegistry.GROUP);
     public static final Block SMALL_ANCIENT_GLASS_SHARD = registerBlockWithItem(new AncientGlassShard(FabricBlockSettings.copyOf(GLASS).noCollision()), "small_ancient_glass_shard", ItemRegistry.GROUP);
     public static final Block ANCIENT_GLASS = registerBlockWithItem(new AncientGlassBlock(FabricBlockSettings.copyOf(GLASS)), "ancient_glass", ItemRegistry.GROUP);
     public static final Block BLACK_SAND = registerBlockWithItem(new FallingBlock(FabricBlockSettings.copyOf(SAND).breakByTool(FabricToolTags.SHOVELS)), "black_sand", ItemRegistry.GROUP);
     public static final Block EXP_SHROOM_STEM = registerBlockWithItem(new ExpShroomStemBlock(FabricBlockSettings.copyOf(BAMBOO).breakByTool(FabricToolTags.AXES)), "experience_mushroom_stem", ItemRegistry.GROUP);
-    public static final Block EXP_SHROOM_CAP = registerBlockWithItem(new Block(FabricBlockSettings.copyOf(RED_MUSHROOM_BLOCK).mapColor(MapColor.DARK_AQUA)), "experience_mushroom_cap", ItemRegistry.GROUP);
-    public static final Block EXP_SHROOM_CAP_SOURCE = registerBlockWithItem(new ExpShroomCapBlock(FabricBlockSettings.copyOf(RED_MUSHROOM_BLOCK).mapColor(MapColor.TEAL).breakByTool(FabricToolTags.AXES).ticksRandomly()), "experience_mushroom_cap_source", ItemRegistry.GROUP);
+    public static final Block EXP_SHROOM_CAP = registerBlockWithItem(new Block(FabricBlockSettings.copyOf(RED_MUSHROOM_BLOCK).mapColor(MapColor.DARK_AQUA).sounds(BlockSoundGroup.NETHER_WART)), "experience_mushroom_cap", ItemRegistry.GROUP);
+    public static final Block EXP_SHROOM_CAP_SOURCE = registerBlockWithItem(new ExpShroomCapBlock(FabricBlockSettings.copyOf(RED_MUSHROOM_BLOCK).sounds(BlockSoundGroup.NETHER_WART).mapColor(MapColor.TEAL).breakByTool(FabricToolTags.AXES).ticksRandomly()), "experience_mushroom_cap_source", ItemRegistry.GROUP);
     public static final Block GEYSER = registerBlockWithItem(new Geyser(FabricBlockSettings.copyOf(STONE).breakByTool(FabricToolTags.PICKAXES, 5).nonOpaque()), "geyser", ItemRegistry.GROUP);
     public static final Block POROUS_SHADESTONE = registerBlockWithItem(new PorousShadestone(FabricBlockSettings.copyOf(STONE).breakByTool(FabricToolTags.PICKAXES, 5)), "porous_shadestone", ItemRegistry.GROUP);
     public static final Block GAMMASTONE_BRICKS = registerBlockWithItem(new Gammastone(FabricBlockSettings.copyOf(STONE_BRICKS).strength(3.0f, 12).breakByTool(FabricToolTags.PICKAXES, 3).requiresTool()), "gammastone_bricks", ItemRegistry.GROUP);
