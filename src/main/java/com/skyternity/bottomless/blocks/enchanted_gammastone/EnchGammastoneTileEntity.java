@@ -4,10 +4,7 @@ import com.skyternity.bottomless.blocks.BlockRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.item.EnchantedBookItem;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -74,6 +71,7 @@ public class EnchGammastoneTileEntity extends BlockEntity implements BlockEntity
     }
     public void putBlockHealth(int hp){this.blockHealth = hp;}
     public void putDamageTimer(int time){this.damageTimer = time;}
+
 
 
     @Override

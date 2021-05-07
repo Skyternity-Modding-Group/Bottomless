@@ -9,6 +9,8 @@ import com.skyternity.bottomless.blocks.enchanted_gammastone.Gammastone;
 import com.skyternity.bottomless.blocks.exp_mushroom.ExpShroomCapBlock;
 import com.skyternity.bottomless.blocks.exp_mushroom.ExpShroomStemBlock;
 import com.skyternity.bottomless.blocks.geyser.Geyser;
+import com.skyternity.bottomless.blocks.lanterstalk.LanterStalk;
+import com.skyternity.bottomless.blocks.lanterstalk.LanterStalkDiscfruit;
 import com.skyternity.bottomless.items.ItemRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
@@ -41,6 +43,8 @@ public class BlockRegistry {
     public static final Block GAMMASTONE_BRICKS = registerBlockWithItem(new Gammastone(FabricBlockSettings.copyOf(STONE_BRICKS).strength(3.0f, 12).breakByTool(FabricToolTags.PICKAXES, 3).requiresTool()), "gammastone_bricks", ItemRegistry.GROUP);
     public static final Block ENCHANTED_GAMMASTONE_BRICKS = register(new EnchGammastone(FabricBlockSettings.copyOf(STONE_BRICKS).strength(3.0f, 12).breakByTool(FabricToolTags.PICKAXES, 3).requiresTool()), "enchanted_gammastone_bricks");
     public static final BlockEntityType<EnchGammastoneTileEntity> ENCH_GAMMASTONE_TILEENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, BottomlessMain.MOD_ID + ":enchanted_gammastone_bricks", FabricBlockEntityTypeBuilder.create(EnchGammastoneTileEntity::new, ENCHANTED_GAMMASTONE_BRICKS).build());
+    public static final Block LANTERSTALK = registerBlockWithItem(new LanterStalk(FabricBlockSettings.copyOf(BAMBOO).strength(0.0f, 0.0f)), "lanterstalk", ItemRegistry.GROUP);
+    public static final Block LANTERSTALK_DISCFRUITED = registerBlockWithItem(new LanterStalkDiscfruit(FabricBlockSettings.copyOf(BAMBOO).strength(0.0f, 0.0f)), "lanterstalk_discfruit", ItemRegistry.GROUP);
 
 
     // TODO finalize name

@@ -1,0 +1,18 @@
+{
+  "variants": {
+    "stalk_connect_type=top_ceiling": {
+      "model": "bottomless:block/lanterstalk_top",
+      "y": 270,
+      "x": 180
+    },
+    "stalk_connect_type=middle": {
+      "model": "bottomless:block/lanterstalk_middle",
+      "y": 180,
+      "x": 180
+    },
+    "stalk_connect_type=bottom_floor": {
+      "model": "bottomless:block/lanterstalk_bottom",
+      "x": 180
+    }
+  }
+}
