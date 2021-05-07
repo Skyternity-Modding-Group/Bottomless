@@ -1,10 +1,7 @@
 package com.skyternity.bottomless.blocks.lanterstalk;
 
 import com.skyternity.bottomless.blocks.BlockRegistry;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Fertilizable;
-import net.minecraft.block.ShapeContext;
+import net.minecraft.block.*;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
@@ -44,20 +41,7 @@ public class LanterStalk extends Block implements Fertilizable {
     @Nullable
     @Override
     public BlockState getPlacementState(ItemPlacementContext ctx) {
-        if(ctx.getSide() == Direction.DOWN){
-            if(ctx.getWorld().getBlockState(ctx.getBlockPos().down()).getBlock().getClass() != LanterStalk.class){
-                return (BlockState)this.getDefaultState().with(POSITION, StalkConnectionType.BOTTOM);
-            }else{
-                return (BlockState)this.getDefaultState().with(POSITION, StalkConnectionType.MIDDLE);
-            }
-        }else if(ctx.getSide() == Direction.UP){
-            if(ctx.getWorld().getBlockState(ctx.getBlockPos().up()).getBlock().getClass() != LanterStalk.class){
-                return (BlockState)this.getDefaultState().with(POSITION, StalkConnectionType.TOP);
-            }else{
-                return (BlockState)this.getDefaultState().with(POSITION, StalkConnectionType.MIDDLE);
-            }
-        }
-        return (BlockState)this.getDefaultState().with(POSITION, StalkConnectionType.MIDDLE);
+        return getUpdatedBlockState(ctx.getWorld(), ctx.getBlockPos());
     }
 
     @Override
@@ -70,21 +54,36 @@ public class LanterStalk extends Block implements Fertilizable {
     }
 
     public BlockState getUpdatedBlockState(World world ,BlockPos pos){
-        if(world.getBlockState(pos.down()).getBlock().getClass() == LanterStalk.class || world.getBlockState(pos.down()).getBlock().getClass() == LanterStalkDiscfruit.class && world.getBlockState(pos.up()).getBlock().getClass() == LanterStalk.class || world.getBlockState(pos.up()).getBlock().getClass() == LanterStalkDiscfruit.class){
-            return (BlockState)this.getDefaultState().with(POSITION, StalkConnectionType.MIDDLE);
-        }else if(world.getBlockState(pos.down()).getBlock().getClass() != LanterStalk.class || world.getBlockState(pos.down()).getBlock().getClass() != LanterStalkDiscfruit.class ) {
-            return (BlockState)this.getDefaultState().with(POSITION, StalkConnectionType.TOP);
-        }else if(world.getBlockState(pos.up()).getBlock().getClass() != LanterStalk.class || world.getBlockState(pos.up()).getBlock().getClass() != LanterStalkDiscfruit.class) {
-            return (BlockState)this.getDefaultState().with(POSITION, StalkConnectionType.BOTTOM);
+        Block blockBelow = world.getBlockState(pos.down()).getBlock();
+        Block blockAbove = world.getBlockState(pos.up()).getBlock();
+
+        if(blockBelow == BlockRegistry.LANTERSTALK || blockBelow == BlockRegistry.LANTERSTALK_DISCFRUITED){
+            if(blockAbove == BlockRegistry.LANTERSTALK || blockAbove == BlockRegistry.LANTERSTALK_DISCFRUITED){
+                return (BlockState)this.getDefaultState().with(POSITION, StalkConnectionType.MIDDLE);
+            }else{
+                if(blockAbove == Blocks.AIR){
+                    return (BlockState)this.getDefaultState().with(POSITION, StalkConnectionType.MIDDLE);
+                }else{
+                    return (BlockState)this.getDefaultState().with(POSITION, StalkConnectionType.BOTTOM);
+                }
+            }
+        }else{
+            if(blockBelow == Blocks.AIR){
+                return (BlockState)this.getDefaultState().with(POSITION, StalkConnectionType.MIDDLE);
+            }else{
+                return (BlockState)this.getDefaultState().with(POSITION, StalkConnectionType.TOP);
+            }
         }
-        return (BlockState)this.getDefaultState().with(POSITION, StalkConnectionType.MIDDLE);
+
     }
 
     @Override
     public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
-        if(world.getBlockState(pos.down()).getBlock() == BlockRegistry.LANTERSTALK.getDefaultState().getBlock() || world.getBlockState(pos.down()).getBlock() == BlockRegistry.LANTERSTALK_DISCFRUITED.getDefaultState().getBlock()){
+        Block blockBelow = world.getBlockState(pos.down()).getBlock();
+        Block blockAbove = world.getBlockState(pos.up()).getBlock();
+        if(blockBelow == BlockRegistry.LANTERSTALK || blockBelow == BlockRegistry.LANTERSTALK_DISCFRUITED){
             return true;
-        }else if(world.getBlockState(pos.up()).getBlock() == BlockRegistry.LANTERSTALK.getDefaultState().getBlock() || world.getBlockState(pos.up()).getBlock() == BlockRegistry.LANTERSTALK_DISCFRUITED.getDefaultState().getBlock()){
+        }else if(blockAbove == BlockRegistry.LANTERSTALK || blockAbove == BlockRegistry.LANTERSTALK_DISCFRUITED){
             return true;
         }else if(world.getBlockState(pos.down()).isSolidBlock(world, pos)){
             return true;
@@ -106,11 +105,40 @@ public class LanterStalk extends Block implements Fertilizable {
     }
 
     @Override
+    public boolean hasRandomTicks(BlockState state) { return true; }
+
+    @Override
+    public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+        grow(world, random, pos, state);
+    }
+
+    @Override
     public void grow(ServerWorld world, Random random, BlockPos pos, BlockState state) {
         BlockState stalkState = world.getBlockState(pos);
-        if(stalkState.getBlock() instanceof LanterStalk){
-            if(stalkState == this.getDefaultState().with(POSITION, StalkConnectionType.MIDDLE)){
+        BlockState stalkStateAbove = world.getBlockState(pos.up());
+        BlockState stalkStateBelow = world.getBlockState(pos.down());
+
+        if(stalkState == this.getDefaultState().with(POSITION, StalkConnectionType.MIDDLE)){
+            if(stalkStateAbove.getBlock() == Blocks.AIR || stalkStateBelow.getBlock() == Blocks.AIR){
+                if(stalkStateAbove.getBlock() == Blocks.AIR){
+                    world.setBlockState(pos.up(), getUpdatedBlockState(world, pos.up()));
+                }else if(stalkStateBelow.getBlock() == Blocks.AIR){
+                    world.setBlockState(pos.down(), getUpdatedBlockState(world, pos.down()));
+                }
+            }else{
                 world.setBlockState(pos, BlockRegistry.LANTERSTALK_DISCFRUITED.getDefaultState());
+            }
+
+        }else{
+            if(stalkState == this.getDefaultState().with(POSITION, StalkConnectionType.BOTTOM)){
+                if(stalkStateBelow.getBlock() == Blocks.AIR){
+                    world.setBlockState(pos.down(), getUpdatedBlockState(world, pos.down()));
+                }
+            }else if(stalkState == this.getDefaultState().with(POSITION, StalkConnectionType.TOP)){
+                System.out.println("IM ON THE BOTTOM YA KNOW");
+                if(stalkStateAbove.getBlock() == Blocks.AIR){
+                    world.setBlockState(pos.up(), getUpdatedBlockState(world, pos.up()));
+                }
             }
         }
     }

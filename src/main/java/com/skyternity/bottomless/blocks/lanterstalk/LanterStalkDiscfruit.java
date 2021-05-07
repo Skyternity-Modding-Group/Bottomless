@@ -25,9 +25,11 @@ public class LanterStalkDiscfruit extends Block {
 
     @Override
     public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
-        if(world.getBlockState(pos.down()).getBlock() == BlockRegistry.LANTERSTALK.getDefaultState().getBlock()){
+        Block blockBelow = world.getBlockState(pos.down()).getBlock();
+        Block blockAbove = world.getBlockState(pos.up()).getBlock();
+        if(blockBelow == BlockRegistry.LANTERSTALK || blockBelow == BlockRegistry.LANTERSTALK_DISCFRUITED){
             return true;
-        }else if(world.getBlockState(pos.up()).getBlock() == BlockRegistry.LANTERSTALK.getDefaultState().getBlock()){
+        }else if(blockAbove == BlockRegistry.LANTERSTALK || blockAbove == BlockRegistry.LANTERSTALK_DISCFRUITED){
             return true;
         }else if(world.getBlockState(pos.down()).isSolidBlock(world, pos)){
             return true;
