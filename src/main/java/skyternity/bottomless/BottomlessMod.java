@@ -14,6 +14,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import skyternity.bottomless.main.Registration;
+import software.bernie.geckolib3.GeckoLib;
 
 
 @Mod(BottomlessMod.MOD_ID)
@@ -25,6 +26,7 @@ public class BottomlessMod
 
     public BottomlessMod() {
 
+        GeckoLib.initialize();
         Registration.register();
 
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
