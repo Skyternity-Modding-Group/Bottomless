@@ -1,0 +1,6 @@
+{
+    "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "bottomless:block/lanterstalk_middle_discfruit"
+  }
+}

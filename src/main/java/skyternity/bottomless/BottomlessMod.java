@@ -1,6 +1,10 @@
 package skyternity.bottomless;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderTypeLookup;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -14,6 +18,8 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import skyternity.bottomless.main.Registration;
+import skyternity.bottomless.main.block.ModBlocks;
+import skyternity.bottomless.main.item.ModItemGroup;
 import software.bernie.geckolib3.GeckoLib;
 
 
@@ -23,6 +29,8 @@ public class BottomlessMod
 
     public static final String MOD_ID = "bottomless";
     private static final Logger LOGGER = LogManager.getLogger();
+
+    public static final ModItemGroup MAIN_BOTTOMLESS_TAB = new ModItemGroup("bottomless.main", () -> new ItemStack(Items.CARROT));
 
     public BottomlessMod() {
 
@@ -42,7 +50,11 @@ public class BottomlessMod
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
-
+        RenderTypeLookup.setRenderLayer(ModBlocks.ANCIENT_GLASS.get(), RenderType.translucent());
+        RenderTypeLookup.setRenderLayer(ModBlocks.ANCIENT_GLASS_SHARD.get(), RenderType.translucent());
+        RenderTypeLookup.setRenderLayer(ModBlocks.SMALL_ANCIENT_GLASS_SHARD.get(), RenderType.translucent());
+        RenderTypeLookup.setRenderLayer(ModBlocks.LANTERSTALK_DISCFRUITED.get(), RenderType.cutoutMipped());
+        RenderTypeLookup.setRenderLayer(ModBlocks.LANTERSTALK.get(), RenderType.cutoutMipped());
     }
 
     private void enqueueIMC(final InterModEnqueueEvent event) {
