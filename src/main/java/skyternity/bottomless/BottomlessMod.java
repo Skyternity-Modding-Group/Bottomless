@@ -30,7 +30,7 @@ public class BottomlessMod
     public static final String MOD_ID = "bottomless";
     private static final Logger LOGGER = LogManager.getLogger();
 
-    public static final ModItemGroup MAIN_BOTTOMLESS_TAB = new ModItemGroup("bottomless.main", () -> new ItemStack(Items.CARROT));
+    public static final ModItemGroup MAIN_BOTTOMLESS_TAB = new ModItemGroup("bottomless.main", () -> new ItemStack(ModBlocks.SHADESTONE.get()));
 
     public BottomlessMod() {
 
