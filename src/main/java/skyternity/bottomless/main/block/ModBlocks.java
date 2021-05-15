@@ -1,12 +1,12 @@
 package skyternity.bottomless.main.block;
 
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.SoundType;
+import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockReader;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.RegistryObject;
 import skyternity.bottomless.BottomlessMod;
@@ -31,7 +31,7 @@ public class ModBlocks {
 
     public static final RegistryObject<Block> MIDSTONE = registerWithItem("midstone", () -> new Block(AbstractBlock.Properties.of(Material.STONE).sound(SoundType.STONE).strength(50.0f, 1200.0f).harvestTool(ToolType.PICKAXE).harvestLevel(3)), new Item.Properties().tab(BottomlessMod.MAIN_BOTTOMLESS_TAB));
     public static final RegistryObject<Block> SHADESTONE = registerWithItem("shadestone", () -> new Block(AbstractBlock.Properties.of(Material.STONE).sound(SoundType.STONE).strength(50.0f, 1200.0f).harvestTool(ToolType.PICKAXE).harvestLevel(4)), new Item.Properties().tab(BottomlessMod.MAIN_BOTTOMLESS_TAB));
-    public static final RegistryObject<Block> ANCIENT_GLASS = registerWithItem("ancient_glass", () -> new AncientGlassBlock(AbstractBlock.Properties.of(Material.GLASS).sound(SoundType.GLASS).strength(0.3f, 0.3f)), new Item.Properties().tab(BottomlessMod.MAIN_BOTTOMLESS_TAB));
+    public static final RegistryObject<Block> ANCIENT_GLASS = registerWithItem("ancient_glass", () -> new AncientGlassBlock(AbstractBlock.Properties.of(Material.GLASS).noOcclusion().sound(SoundType.GLASS).strength(0.3f, 0.3f).isViewBlocking(ModBlocks::never)), new Item.Properties().tab(BottomlessMod.MAIN_BOTTOMLESS_TAB));
     public static final RegistryObject<Block> ANCIENT_GLASS_SHARD = registerWithItem("ancient_glass_shard", () -> new AncientGlassShard(AbstractBlock.Properties.of(Material.GLASS).sound(SoundType.GLASS).noCollission().strength(0.3f, 0.3f)), new Item.Properties().tab(BottomlessMod.MAIN_BOTTOMLESS_TAB));
     public static final RegistryObject<Block> SMALL_ANCIENT_GLASS_SHARD = registerWithItem("small_ancient_glass_shard", () -> new AncientGlassShard(AbstractBlock.Properties.of(Material.GLASS).sound(SoundType.GLASS).noCollission().strength(0.3f, 0.3f)), new Item.Properties().tab(BottomlessMod.MAIN_BOTTOMLESS_TAB));
     public static final RegistryObject<Block> BLACK_SAND = registerWithItem("black_sand", () -> new Block(AbstractBlock.Properties.of(Material.SAND).sound(SoundType.SAND).strength(0.5f, 0.5f).harvestTool(ToolType.SHOVEL)), new Item.Properties().tab(BottomlessMod.MAIN_BOTTOMLESS_TAB));
@@ -61,5 +61,9 @@ public class ModBlocks {
         RegistryObject<T> ret = registerNoItem(name, block);
         Registration.ITEMS.register(name, () -> new BlockItem(ret.get(), itemProperties));
         return ret;
+    }
+
+    private static boolean never(BlockState p_235436_0_, IBlockReader p_235436_1_, BlockPos p_235436_2_) {
+        return false;
     }
 }
