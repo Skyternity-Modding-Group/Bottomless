@@ -79,7 +79,6 @@ public class GeyserTileEntity extends TileEntity implements ITickableTileEntity 
 
                         List<? extends Entity> entitiesAboveGeyser = world.getEntities((Entity)null, scanAboveAABB);
                         if(!entitiesAboveGeyser.isEmpty()){
-                            System.out.println("Lol, somebody is inside the bounding box");
                             for (int i = 0; i < entitiesAboveGeyser.size(); i++){
                                 Entity entity = entitiesAboveGeyser.get(i);
                                 if(entity instanceof LivingEntity){
@@ -89,11 +88,10 @@ public class GeyserTileEntity extends TileEntity implements ITickableTileEntity 
                             }
                         }
                     }else{
-                        world.addParticle(ParticleTypes.BUBBLE, pos1.x, pos1.y, pos1.z, pos.getX(), pos.getY(), pos.getZ());
+                        world.addParticle(ParticleTypes.BUBBLE, pos1.x, pos1.y, pos1.z, 0, 1, 0);
                     }
 
                     nbt.putInt("storedPotiAmount", potionAmount);
-                    System.out.println("POTION AMOUNT IS " + potionAmount + " IN " + tile);
                     tile.setChanged();
                 }
             }
